@@ -1,4 +1,3 @@
-
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { ContentCarousel, ContentItem } from "@/components/ContentCarousel";
@@ -10,8 +9,8 @@ const heroData = {
   description: "Regardez vos émissions télévisées préférées en direct et à la demande. Des actualités aux documentaires en passant par les talk-shows et émissions de cuisine, toute la télévision est à portée de main.",
   backgroundImage: "https://images.unsplash.com/photo-1584905066893-7d5c142ba4e1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1587&q=80",
   buttonText: "Regarder en Direct",
-  buttonLink: "/tv",
-  type: "tv",
+  buttonLink: "https://french-tv.lol/",
+  type: "external",
 };
 
 // Mock content for carousels
@@ -43,6 +42,11 @@ const reality: ContentItem[] = [
 ];
 
 const TV = () => {
+  const handleWatchLive = (e: React.MouseEvent) => {
+    e.preventDefault();
+    window.open(heroData.buttonLink, '_blank', 'noopener,noreferrer');
+  };
+
   return (
     <div className="min-h-screen bg-stream-dark text-white">
       <Navbar />
@@ -55,6 +59,7 @@ const TV = () => {
           buttonText={heroData.buttonText}
           buttonLink={heroData.buttonLink}
           type={heroData.type}
+          onButtonClick={handleWatchLive}
         />
         
         <div className="content-container">
