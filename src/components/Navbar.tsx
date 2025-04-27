@@ -1,13 +1,14 @@
-
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Home, Music, Film, Tv } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Home, Music, Film, Tv, LogIn, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,6 +27,11 @@ export const Navbar = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    navigate('/');
+  };
+
   return (
     <header
       className={cn(
@@ -36,21 +42,40 @@ export const Navbar = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between py-4">
           <Link to="/" className="flex items-center space-x-2">
-            <span className="text-2xl font-bold text-gradient">saba-streamX</span>
+            <span className="text-3xl font-bold" style={{ color: '#ea384c' }}>saba-streamX</span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-1">
-            <NavItem to="/" icon={<Home className="h-4 w-4 mr-2" />} label="Accueil" />
-            <NavItem to="/music" icon={<Music className="h-4 w-4 mr-2" />} label="Musique" />
-            <NavItem to="/films" icon={<Film className="h-4 w-4 mr-2" />} label="Films" />
-            <NavItem to="/series" icon={<Tv className="h-4 w-4 mr-2" />} label="Séries" />
-            <NavItem to="/tv" icon={<Tv className="h-4 w-4 mr-2" />} label="TV" />
+          <nav className="hidden md:flex items-center space-x-2">
+            <NavItem to="/" icon={<Home className="h-5 w-5 mr-2" />} label="Accueil" />
+            <NavItem to="/music" icon={<Music className="h-5 w-5 mr-2" />} label="Musique" />
+            <NavItem to="/films" icon={<Film className="h-5 w-5 mr-2" />} label="Films" />
+            <NavItem to="/series" icon={<Tv className="h-5 w-5 mr-2" />} label="Séries" />
+            <NavItem to="/tv" icon={<Tv className="h-5 w-5 mr-2" />} label="TV" />
+            {isLoggedIn ? (
+              <Button 
+                variant="ghost" 
+                size="lg" 
+                onClick={handleLogout}
+                className="flex items-center text-white hover:text-red-500"
+              >
+                <LogOut className="h-5 w-5 mr-2" />
+                Déconnexion
+              </Button>
+            ) : (
+              <Button 
+                variant="ghost" 
+                size="lg" 
+                onClick={() => navigate('/login')}
+                className="flex items-center text-white hover:text-red-500"
+              >
+                <LogIn className="h-5 w-5 mr-2" />
+                Connexion
+              </Button>
+            )}
           </nav>
 
-          {/* Mobile Menu Button */}
           <div className="md:hidden">
-            <Button variant="ghost" size="sm" onClick={toggleMobileMenu} className="text-white">
+            <Button variant="ghost" size="lg" onClick={toggleMobileMenu} className="text-white">
               <span className="sr-only">Open menu</span>
               <svg
                 className="h-6 w-6"
@@ -70,15 +95,41 @@ export const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Navigation */}
       {isMobileMenuOpen && (
         <nav className="md:hidden bg-stream-darker border-t border-gray-800 py-2 animate-fade-in">
-          <div className="container mx-auto px-4 flex flex-col space-y-1">
+          <div className="container mx-auto px-4 flex flex-col space-y-2">
             <MobileNavItem to="/" icon={<Home className="h-5 w-5 mr-3" />} label="Accueil" onClick={() => setIsMobileMenuOpen(false)} />
             <MobileNavItem to="/music" icon={<Music className="h-5 w-5 mr-3" />} label="Musique" onClick={() => setIsMobileMenuOpen(false)} />
             <MobileNavItem to="/films" icon={<Film className="h-5 w-5 mr-3" />} label="Films" onClick={() => setIsMobileMenuOpen(false)} />
             <MobileNavItem to="/series" icon={<Tv className="h-5 w-5 mr-3" />} label="Séries" onClick={() => setIsMobileMenuOpen(false)} />
             <MobileNavItem to="/tv" icon={<Tv className="h-5 w-5 mr-3" />} label="TV" onClick={() => setIsMobileMenuOpen(false)} />
+            {isLoggedIn ? (
+              <Button 
+                variant="ghost" 
+                size="lg"
+                onClick={() => {
+                  handleLogout();
+                  setIsMobileMenuOpen(false);
+                }}
+                className="flex items-center justify-start text-white hover:text-red-500 w-full"
+              >
+                <LogOut className="h-5 w-5 mr-3" />
+                Déconnexion
+              </Button>
+            ) : (
+              <Button 
+                variant="ghost" 
+                size="lg"
+                onClick={() => {
+                  navigate('/login');
+                  setIsMobileMenuOpen(false);
+                }}
+                className="flex items-center justify-start text-white hover:text-red-500 w-full"
+              >
+                <LogIn className="h-5 w-5 mr-3" />
+                Connexion
+              </Button>
+            )}
           </div>
         </nav>
       )}
