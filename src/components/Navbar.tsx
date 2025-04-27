@@ -41,8 +41,8 @@ export const Navbar = () => {
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between py-4">
-          <Link to="/" className="flex items-center space-x-2">
-            <span className="text-3xl font-bold" style={{ color: '#ea384c' }}>saba-streamX</span>
+          <Link to="/" className="flex items-center space-x-2 transform transition-all duration-300 hover:scale-105">
+            <span className="text-4xl font-bold text-[#ea384c] hover:text-stream-purple transition-colors">saba-streamX</span>
           </Link>
 
           <nav className="hidden md:flex items-center space-x-2">
@@ -56,7 +56,7 @@ export const Navbar = () => {
                 variant="ghost" 
                 size="lg" 
                 onClick={handleLogout}
-                className="flex items-center text-white hover:text-red-500"
+                className="flex items-center text-white hover:text-red-500 transform transition-all duration-300 hover:scale-105 hover:bg-stream-purple/20 active:scale-95"
               >
                 <LogOut className="h-5 w-5 mr-2" />
                 Déconnexion
@@ -66,7 +66,7 @@ export const Navbar = () => {
                 variant="ghost" 
                 size="lg" 
                 onClick={() => navigate('/login')}
-                className="flex items-center text-white hover:text-red-500"
+                className="flex items-center text-white hover:text-red-500 transform transition-all duration-300 hover:scale-105 hover:bg-stream-purple/20 active:scale-95"
               >
                 <LogIn className="h-5 w-5 mr-2" />
                 Connexion
@@ -111,7 +111,7 @@ export const Navbar = () => {
                   handleLogout();
                   setIsMobileMenuOpen(false);
                 }}
-                className="flex items-center justify-start text-white hover:text-red-500 w-full"
+                className="flex items-center justify-start text-white hover:text-red-500 w-full transform transition-all duration-300 hover:scale-105 hover:bg-stream-purple/20 active:scale-95"
               >
                 <LogOut className="h-5 w-5 mr-3" />
                 Déconnexion
@@ -124,7 +124,7 @@ export const Navbar = () => {
                   navigate('/login');
                   setIsMobileMenuOpen(false);
                 }}
-                className="flex items-center justify-start text-white hover:text-red-500 w-full"
+                className="flex items-center justify-start text-white hover:text-red-500 w-full transform transition-all duration-300 hover:scale-105 hover:bg-stream-purple/20 active:scale-95"
               >
                 <LogIn className="h-5 w-5 mr-3" />
                 Connexion
@@ -146,7 +146,7 @@ type NavItemProps = {
 const NavItem = ({ to, icon, label }: NavItemProps) => (
   <Link
     to={to}
-    className="flex items-center px-3 py-2 rounded-md text-sm font-medium text-white hover:bg-stream-purple/20 hover:text-stream-purple transition-colors"
+    className="flex items-center px-3 py-2 rounded-md text-sm font-medium text-white hover:bg-stream-purple/20 hover:text-stream-purple transition-all duration-300 transform hover:scale-105 active:scale-95"
   >
     {icon}
     {label}
@@ -160,7 +160,7 @@ type MobileNavItemProps = NavItemProps & {
 const MobileNavItem = ({ to, icon, label, onClick }: MobileNavItemProps) => (
   <Link
     to={to}
-    className="flex items-center px-3 py-3 rounded-md text-base font-medium text-white hover:bg-stream-purple/20 hover:text-stream-purple transition-colors"
+    className="flex items-center px-3 py-3 rounded-md text-base font-medium text-white hover:bg-stream-purple/20 hover:text-stream-purple transition-all duration-300 transform hover:scale-105 active:scale-95"
     onClick={onClick}
   >
     {icon}
