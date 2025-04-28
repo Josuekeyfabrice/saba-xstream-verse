@@ -35,7 +35,7 @@ const Login = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#ea384c]">
       <div className="glass-card p-8 w-full max-w-md transform hover:scale-105 transition-all duration-300">
-        <h2 className="text-3xl font-bold mb-6 text-white text-center hover:text-stream-purple transition-colors">Connexion</h2>
+        <h2 className="text-3xl font-bold mb-6 text-white text-center hover:text-stream-purple transition-colors">Saba Login</h2>
         <form onSubmit={handleLogin} className="space-y-4">
           <div className="transform transition-all duration-300 hover:-translate-y-1">
             <label htmlFor="email" className="block text-sm font-medium text-white mb-1">
