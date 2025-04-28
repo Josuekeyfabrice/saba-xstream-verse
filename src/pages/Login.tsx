@@ -3,15 +3,33 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
 
 const Login = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoggedIn(true);
-    navigate('/');
+    
+    // Ici, vous devriez normalement valider les identifiants avec un backend
+    // Pour cet exemple, nous utilisons une validation simple
+    if (email && password) {
+      localStorage.setItem('isLoggedIn', 'true');
+      toast({
+        title: "Connexion réussie",
+        description: "Bienvenue sur notre plateforme !",
+      });
+      navigate('/');
+    } else {
+      toast({
+        variant: "destructive",
+        title: "Erreur de connexion",
+        description: "Veuillez remplir tous les champs",
+      });
+    }
   };
 
   return (
@@ -26,6 +44,8 @@ const Login = () => {
             <Input
               id="email"
               type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="votre@email.com"
               required
               className="w-full transition-all duration-300 hover:border-stream-purple focus:ring-stream-purple"
@@ -38,6 +58,8 @@ const Login = () => {
             <Input
               id="password"
               type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
               required
               className="w-full transition-all duration-300 hover:border-stream-purple focus:ring-stream-purple"

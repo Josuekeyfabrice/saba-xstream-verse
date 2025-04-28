@@ -3,7 +3,8 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 import Index from "./pages/Index";
 import Films from "./pages/Films";
 import Series from "./pages/Series";
@@ -21,12 +22,47 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/films" element={<Films />} />
-          <Route path="/series" element={<Series />} />
-          <Route path="/music" element={<Music />} />
-          <Route path="/tv" element={<TV />} />
           <Route path="/login" element={<Login />} />
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <Index />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/films"
+            element={
+              <ProtectedRoute>
+                <Films />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/series"
+            element={
+              <ProtectedRoute>
+                <Series />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/music"
+            element={
+              <ProtectedRoute>
+                <Music />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/tv"
+            element={
+              <ProtectedRoute>
+                <TV />
+              </ProtectedRoute>
+            }
+          />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
