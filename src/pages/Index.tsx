@@ -1,4 +1,3 @@
-
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { ContentCarousel, ContentItem } from "@/components/ContentCarousel";
@@ -54,6 +53,57 @@ const mexicanFilms: ContentItem[] = [
   { id: "42", title: "Como Agua Para Chocolate", imageUrl: "https://images.unsplash.com/photo-1519817650390-64a93db51149?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80", type: "film", year: "1992", rating: "15" },
 ];
 
+// Films français
+const frenchFilms: ContentItem[] = [
+  { id: "60", title: "Amélie Poulain", imageUrl: "https://images.unsplash.com/photo-1503622549275-16ea8b9c50c9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80", type: "film", year: "2001", rating: "12+" },
+  { id: "61", title: "Les Intouchables", imageUrl: "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80", type: "film", year: "2011", rating: "12+" },
+  { id: "62", title: "La Haine", imageUrl: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1925&q=80", type: "film", year: "1995", rating: "16+" },
+  { id: "63", title: "Le Fabuleux Destin d'Amélie Poulain", imageUrl: "https://images.unsplash.com/photo-1528642474498-1af0c17fd8c3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1769&q=80", type: "film", year: "2001", rating: "12+" },
+  { id: "64", title: "Le Dîner de Cons", imageUrl: "https://images.unsplash.com/photo-1558124757-166e8d552985?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80", type: "film", year: "1998", rating: "12+" },
+  { id: "65", title: "La Vie en Rose", imageUrl: "https://images.unsplash.com/photo-1536008758366-72fbc5b16911?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80", type: "film", year: "2007", rating: "12+" },
+];
+
+// Films asiatiques
+const asianFilms: ContentItem[] = [
+  { id: "66", title: "Parasite", imageUrl: "https://images.unsplash.com/photo-1542204165-65bf26472b9b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1674&q=80", type: "film", year: "2019", rating: "16+" },
+  { id: "67", title: "Old Boy", imageUrl: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1925&q=80", type: "film", year: "2003", rating: "18+" },
+  { id: "68", title: "Spirited Away", imageUrl: "https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1558&q=80", type: "film", year: "2001", rating: "Tous" },
+  { id: "69", title: "The Raid", imageUrl: "https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80", type: "film", year: "2011", rating: "18+" },
+  { id: "70", title: "Your Name", imageUrl: "https://images.unsplash.com/photo-1500462918059-b1a0cb512f1d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80", type: "film", year: "2016", rating: "Tous" },
+  { id: "71", title: "The Handmaiden", imageUrl: "https://images.unsplash.com/photo-1604975701397-6365ccbd028a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80", type: "film", year: "2016", rating: "18+" },
+];
+
+// Films bollywoodiens
+const bollywoodFilms: ContentItem[] = [
+  { id: "72", title: "3 Idiots", imageUrl: "https://images.unsplash.com/photo-1466442929976-97f336a657be?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1834&q=80", type: "film", year: "2009", rating: "12+" },
+  { id: "73", title: "Dangal", imageUrl: "https://images.unsplash.com/photo-1504826260979-242151ee45b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80", type: "film", year: "2016", rating: "12+" },
+  { id: "74", title: "Lagaan", imageUrl: "https://images.unsplash.com/photo-1566438480900-0609be27a4be?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1894&q=80", type: "film", year: "2001", rating: "12+" },
+  { id: "75", title: "Kabhi Khushi Kabhie Gham", imageUrl: "https://images.unsplash.com/photo-1519817650390-64a93db51149?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80", type: "film", year: "2001", rating: "12+" },
+  { id: "76", title: "PK", imageUrl: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80", type: "film", year: "2014", rating: "12+" },
+  { id: "77", title: "Bajrangi Bhaijaan", imageUrl: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1674&q=80", type: "film", year: "2015", rating: "12+" },
+];
+
+// Films moyen-orientaux
+const middleEasternFilms: ContentItem[] = [
+  { id: "78", title: "Capernaum", imageUrl: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1769&q=80", type: "film", year: "2018", rating: "16+" },
+  { id: "79", title: "A Separation", imageUrl: "https://images.unsplash.com/photo-1621955964441-c173e01c135b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80", type: "film", year: "2011", rating: "12+" },
+  { id: "80", title: "Omar", imageUrl: "https://images.unsplash.com/photo-1573055418049-c8e0b7e3403d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80", type: "film", year: "2013", rating: "16+" },
+  { id: "81", title: "Theeb", imageUrl: "https://images.unsplash.com/photo-1634157703702-3c124b455499?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1674&q=80", type: "film", year: "2014", rating: "12+" },
+  { id: "82", title: "Wadjda", imageUrl: "https://images.unsplash.com/photo-1540587639271-7e09e2671906?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1774&q=80", type: "film", year: "2012", rating: "Tous" },
+  { id: "83", title: "The Insult", imageUrl: "https://images.unsplash.com/photo-1581004705471-9c5e1b6965fd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80", type: "film", year: "2017", rating: "16+" },
+];
+
+// Films scandinaves
+const scandinavianFilms: ContentItem[] = [
+  { id: "84", title: "The Hunt", imageUrl: "https://images.unsplash.com/photo-1576506913269-e88732a83fac?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80", type: "film", year: "2012", rating: "16+" },
+  { id: "85", title: "Let the Right One In", imageUrl: "https://images.unsplash.com/photo-1584905066893-7d5c142ba4e1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1587&q=80", type: "film", year: "2008", rating: "16+" },
+  { id: "86", title: "The Girl with the Dragon Tattoo", imageUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1964&q=80", type: "film", year: "2009", rating: "18+" },
+  { id: "87", title: "A Man Called Ove", imageUrl: "https://images.unsplash.com/photo-1505253758473-96b7015fcd40?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1600&q=80", type: "film", year: "2015", rating: "12+" },
+  { id: "88", title: "Festen", imageUrl: "https://images.unsplash.com/photo-1561731216-c3a4d99437d5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80", type: "film", year: "1998", rating: "18+" },
+  { id: "89", title: "The Square", imageUrl: "https://images.unsplash.com/photo-1556911220-bff31c812dba?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1868&q=80", type: "film", year: "2017", rating: "16+" },
+];
+
+// Films populaires
 const popularSeries: ContentItem[] = [
   { id: "7", title: "House of the Dragon", imageUrl: "https://images.unsplash.com/photo-1628155930542-3c7a64e2cb0d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1674&q=80", type: "series", year: "2022", rating: "18+" },
   { id: "8", title: "The Witcher", imageUrl: "https://images.unsplash.com/photo-1626544827763-d516dce335e2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80", type: "series", year: "2019", rating: "18+" },
@@ -119,10 +169,15 @@ const Index = () => {
         <div className="content-container">
           <ContentCarousel title="Films Tendance" items={trendingFilms} />
           
-          {/* Nouvelles sections ajoutées */}
+          {/* Catégories par région/pays */}
           <ContentCarousel title="Cinéma Africain" items={africanFilms} />
           <ContentCarousel title="Films Américains" items={americanFilms} />
           <ContentCarousel title="Cinéma Mexicain" items={mexicanFilms} />
+          <ContentCarousel title="Cinéma Français" items={frenchFilms} />
+          <ContentCarousel title="Films Asiatiques" items={asianFilms} />
+          <ContentCarousel title="Bollywood" items={bollywoodFilms} />
+          <ContentCarousel title="Cinéma Moyen-Oriental" items={middleEasternFilms} />
+          <ContentCarousel title="Films Scandinaves" items={scandinavianFilms} />
           
           <ContentCarousel title="Séries Populaires" items={popularSeries} />
           <ContentCarousel title="Nouvelles Séries" items={newSeries} />
