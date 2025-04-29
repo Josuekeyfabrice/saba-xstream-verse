@@ -93,7 +93,7 @@ const middleEasternFilms: ContentItem[] = [
   { id: "83", title: "The Insult", imageUrl: "https://images.unsplash.com/photo-1581004705471-9c5e1b6965fd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80", type: "film", year: "2017", rating: "16+" },
 ];
 
-// Films scandinaves
+// Films Scandinaves
 const scandinavianFilms: ContentItem[] = [
   { id: "84", title: "The Hunt", imageUrl: "https://images.unsplash.com/photo-1576506913269-e88732a83fac?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80", type: "film", year: "2012", rating: "16+" },
   { id: "85", title: "Let the Right One In", imageUrl: "https://images.unsplash.com/photo-1584905066893-7d5c142ba4e1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1587&q=80", type: "film", year: "2008", rating: "16+" },
@@ -121,6 +121,16 @@ const newSeries: ContentItem[] = [
   { id: "46", title: "Euphoria", imageUrl: "https://images.unsplash.com/photo-1540587639271-7e09e2671906?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1774&q=80", type: "series", year: "2019", rating: "18+" },
   { id: "47", title: "The Queen's Gambit", imageUrl: "https://images.unsplash.com/photo-1581004705471-9c5e1b6965fd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80", type: "series", year: "2020", rating: "16+" },
   { id: "48", title: "The Bear", imageUrl: "https://images.unsplash.com/photo-1576506913269-e88732a83fac?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80", type: "series", year: "2022", rating: "18+" },
+];
+
+// Séries internationales à succès
+const internationalHitSeries: ContentItem[] = [
+  { id: "90", title: "La Casa de Papel", imageUrl: "https://images.unsplash.com/photo-1518374361665-f5171864e4a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1568&q=80", type: "series", year: "2017", rating: "16+" },
+  { id: "91", title: "Squid Game", imageUrl: "https://images.unsplash.com/photo-1634157703702-3c124b455499?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1674&q=80", type: "series", year: "2021", rating: "18+" },
+  { id: "92", title: "Dark", imageUrl: "https://images.unsplash.com/photo-1581004705471-9c5e1b6965fd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80", type: "series", year: "2017", rating: "16+" },
+  { id: "93", title: "Lupin", imageUrl: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1769&q=80", type: "series", year: "2021", rating: "14+" },
+  { id: "94", title: "Elite", imageUrl: "https://images.unsplash.com/photo-1576506913269-e88732a83fac?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80", type: "series", year: "2018", rating: "18+" },
+  { id: "95", title: "Narcos", imageUrl: "https://images.unsplash.com/photo-1540587639271-7e09e2671906?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1774&q=80", type: "series", year: "2015", rating: "18+" },
 ];
 
 // Séries documentaires
@@ -168,6 +178,9 @@ const Index = () => {
         
         <div className="content-container">
           <ContentCarousel title="Films Tendance" items={trendingFilms} />
+          
+          {/* Nouvelles séries internationales à succès */}
+          <ContentCarousel title="Séries Internationales à Succès" items={internationalHitSeries} />
           
           {/* Catégories par région/pays */}
           <ContentCarousel title="Cinéma Africain" items={africanFilms} />
