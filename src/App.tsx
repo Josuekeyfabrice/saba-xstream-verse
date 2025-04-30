@@ -11,6 +11,7 @@ import Series from "./pages/Series";
 import Music from "./pages/Music";
 import TV from "./pages/TV";
 import Celebrities from "./pages/Celebrities";
+import Post from "./pages/Post"; // Add import for the new Post page
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
@@ -75,6 +76,15 @@ const App = () => {
               element={
                 <ProtectedRoute>
                   <Celebrities />
+                </ProtectedRoute>
+              }
+            />
+            {/* Add the new Post route */}
+            <Route
+              path="/post"
+              element={
+                <ProtectedRoute>
+                  <Post />
                 </ProtectedRoute>
               }
             />
