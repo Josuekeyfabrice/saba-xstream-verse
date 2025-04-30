@@ -1,6 +1,7 @@
+
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Home, Music, Film, Tv, LogIn, LogOut } from 'lucide-react';
+import { Home, Music, Film, LogIn, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -49,8 +50,20 @@ export const Navbar = () => {
             <NavItem to="/" icon={<Home className="h-5 w-5 mr-2" />} label="Accueil" />
             <NavItem to="/music" icon={<Music className="h-5 w-5 mr-2" />} label="Musique" />
             <NavItem to="/films" icon={<Film className="h-5 w-5 mr-2" />} label="Films" />
-            <NavItem to="/series" icon={<Tv className="h-5 w-5 mr-2" />} label="Séries" />
-            <NavItem to="/tv" icon={<Tv className="h-5 w-5 mr-2" />} label="TV" />
+            <NavItem to="/series" icon={<Film className="h-5 w-5 mr-2" />} label="Séries" />
+            <NavItem 
+              to="/tv" 
+              icon={
+                <div className="h-5 w-5 mr-2 overflow-hidden rounded">
+                  <img 
+                    src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b" 
+                    alt="TV" 
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+              } 
+              label="TV" 
+            />
             {isLoggedIn ? (
               <Button 
                 variant="ghost" 
@@ -101,8 +114,21 @@ export const Navbar = () => {
             <MobileNavItem to="/" icon={<Home className="h-5 w-5 mr-3" />} label="Accueil" onClick={() => setIsMobileMenuOpen(false)} />
             <MobileNavItem to="/music" icon={<Music className="h-5 w-5 mr-3" />} label="Musique" onClick={() => setIsMobileMenuOpen(false)} />
             <MobileNavItem to="/films" icon={<Film className="h-5 w-5 mr-3" />} label="Films" onClick={() => setIsMobileMenuOpen(false)} />
-            <MobileNavItem to="/series" icon={<Tv className="h-5 w-5 mr-3" />} label="Séries" onClick={() => setIsMobileMenuOpen(false)} />
-            <MobileNavItem to="/tv" icon={<Tv className="h-5 w-5 mr-3" />} label="TV" onClick={() => setIsMobileMenuOpen(false)} />
+            <MobileNavItem to="/series" icon={<Film className="h-5 w-5 mr-3" />} label="Séries" onClick={() => setIsMobileMenuOpen(false)} />
+            <MobileNavItem 
+              to="/tv" 
+              icon={
+                <div className="h-5 w-5 mr-3 overflow-hidden rounded">
+                  <img 
+                    src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b" 
+                    alt="TV" 
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+              } 
+              label="TV" 
+              onClick={() => setIsMobileMenuOpen(false)} 
+            />
             {isLoggedIn ? (
               <Button 
                 variant="ghost" 
