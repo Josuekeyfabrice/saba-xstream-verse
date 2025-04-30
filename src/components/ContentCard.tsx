@@ -20,7 +20,7 @@ export const ContentCard = ({ item }: ContentCardProps) => {
       <img 
         src={item.imageUrl} 
         alt={item.title}
-        className="w-full aspect-[2/3] object-cover rounded-md" 
+        className="w-full aspect-[3/4] object-cover rounded-md" 
       />
       
       <div className={`absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>

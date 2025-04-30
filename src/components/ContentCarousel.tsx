@@ -19,14 +19,14 @@ interface ContentCarouselProps {
 
 export const ContentCarousel: React.FC<ContentCarouselProps> = ({ title, items, emptyMessage = "Aucun contenu disponible" }) => {
   return (
-    <section className="py-8 px-4">
+    <section className="py-6 px-4">
       <div className="container mx-auto">
-        <h2 className="text-2xl font-bold mb-6 text-white">{title}</h2>
+        <h2 className="text-2xl font-bold mb-4 text-white">{title}</h2>
         
         {items.length > 0 ? (
           <div className="grid grid-flow-col auto-cols-max gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide">
             {items.map((item) => (
-              <div key={item.id} className="snap-start">
+              <div key={item.id} className="snap-start w-[160px]">
                 <ContentCard item={item} />
               </div>
             ))}
@@ -40,4 +40,3 @@ export const ContentCarousel: React.FC<ContentCarouselProps> = ({ title, items, 
     </section>
   );
 };
-

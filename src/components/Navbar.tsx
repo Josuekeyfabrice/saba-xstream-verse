@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Home, Music, Film, LogIn, LogOut } from 'lucide-react';
+import { Home, Music, Film, LogIn, LogOut, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -64,6 +64,8 @@ export const Navbar = () => {
               } 
               label="TV" 
             />
+            <NavItem to="/celebrities" icon={<Users className="h-5 w-5 mr-2" />} label="Célébrités" />
+            
             {isLoggedIn ? (
               <Button 
                 variant="ghost" 
@@ -129,6 +131,8 @@ export const Navbar = () => {
               label="TV" 
               onClick={() => setIsMobileMenuOpen(false)} 
             />
+            <MobileNavItem to="/celebrities" icon={<Users className="h-5 w-5 mr-3" />} label="Célébrités" onClick={() => setIsMobileMenuOpen(false)} />
+            
             {isLoggedIn ? (
               <Button 
                 variant="ghost" 

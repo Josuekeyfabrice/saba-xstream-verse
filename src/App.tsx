@@ -10,6 +10,7 @@ import Films from "./pages/Films";
 import Series from "./pages/Series";
 import Music from "./pages/Music";
 import TV from "./pages/TV";
+import Celebrities from "./pages/Celebrities";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
@@ -62,6 +63,14 @@ const App = () => (
             element={
               <ProtectedRoute>
                 <TV />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/celebrities"
+            element={
+              <ProtectedRoute>
+                <Celebrities />
               </ProtectedRoute>
             }
           />
