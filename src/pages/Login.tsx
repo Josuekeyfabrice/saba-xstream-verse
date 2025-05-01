@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
@@ -24,7 +23,7 @@ const Login = () => {
     );
     
     if (user) {
-      // Authentification réussie
+      // Authentification réussie - set localStorage values
       localStorage.setItem('isLoggedIn', 'true');
       localStorage.setItem('currentUser', JSON.stringify({ email: user.email, name: user.name }));
       

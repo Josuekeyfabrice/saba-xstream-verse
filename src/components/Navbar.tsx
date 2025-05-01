@@ -6,12 +6,20 @@ import { cn } from '@/lib/utils';
 import { Logo } from './navbar/Logo';
 import { DesktopNav } from './navbar/DesktopNav';
 import { MobileMenu } from './navbar/MobileMenu';
+import { useToast } from '@/hooks/use-toast';
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
+  const { toast } = useToast();
+
+  // Check authentication status on component mount
+  useEffect(() => {
+    const authStatus = localStorage.getItem('isLoggedIn') === 'true';
+    setIsLoggedIn(authStatus);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -31,7 +39,16 @@ export const Navbar = () => {
   };
 
   const handleLogout = () => {
+    // Update both state and localStorage
     setIsLoggedIn(false);
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('currentUser');
+    
+    toast({
+      title: "Déconnexion réussie",
+      description: "Vous avez été déconnecté avec succès",
+    });
+    
     navigate('/');
   };
 
