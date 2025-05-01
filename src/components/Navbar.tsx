@@ -1,9 +1,11 @@
 
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Home, Music, Film, LogIn, LogOut, Users, MessageSquare } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { Logo } from './navbar/Logo';
+import { DesktopNav } from './navbar/DesktopNav';
+import { MobileMenu } from './navbar/MobileMenu';
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -42,65 +44,8 @@ export const Navbar = () => {
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between py-6">
-          <Link to="/" className="flex items-center space-x-2 transform transition-all duration-300 hover:scale-105">
-            <span 
-              className="text-5xl font-bold transition-colors hover:text-stream-purple" 
-              style={{
-                fontFamily: 'Helvetica, Arial, sans-serif',
-                background: 'linear-gradient(to right, #FF8C00, #FFD700)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text'
-              }}
-            >
-              Saba-streamX
-            </span>
-          </Link>
-
-          <nav className="hidden md:flex items-center space-x-2">
-            <NavItem to="/" icon={<Home className="h-5 w-5 mr-2" />} label="Accueil" />
-            <NavItem to="/music" icon={<Music className="h-5 w-5 mr-2" />} label="Musique" />
-            <NavItem to="/films" icon={<Film className="h-5 w-5 mr-2" />} label="Films" />
-            <NavItem to="/series" icon={<Film className="h-5 w-5 mr-2" />} label="Séries" />
-            <NavItem 
-              to="/tv" 
-              icon={
-                <div className="h-5 w-5 mr-2 overflow-hidden rounded">
-                  <img 
-                    src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b" 
-                    alt="TV" 
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-              } 
-              label="TV" 
-            />
-            <NavItem to="/celebrities" icon={<Users className="h-5 w-5 mr-2" />} label="Célébrités" />
-            <NavItem to="/post" icon={<MessageSquare className="h-5 w-5 mr-2" />} label="Communauté" />
-            <NavItem to="/sport" icon={<Film className="h-5 w-5 mr-2" />} label="Sport" />
-            
-            {isLoggedIn ? (
-              <Button 
-                variant="ghost" 
-                size="lg" 
-                onClick={handleLogout}
-                className="flex items-center text-white hover:text-red-500 transform transition-all duration-300 hover:scale-105 hover:bg-stream-purple/20 active:scale-95"
-              >
-                <LogOut className="h-5 w-5 mr-2" />
-                Déconnexion
-              </Button>
-            ) : (
-              <Button 
-                variant="ghost" 
-                size="lg" 
-                onClick={() => navigate('/login')}
-                className="flex items-center text-white hover:text-red-500 transform transition-all duration-300 hover:scale-105 hover:bg-stream-purple/20 active:scale-95"
-              >
-                <LogIn className="h-5 w-5 mr-2" />
-                Connexion
-              </Button>
-            )}
-          </nav>
+          <Logo />
+          <DesktopNav isLoggedIn={isLoggedIn} onLogout={handleLogout} />
 
           <div className="md:hidden">
             <Button variant="ghost" size="lg" onClick={toggleMobileMenu} className="text-white">
@@ -123,92 +68,12 @@ export const Navbar = () => {
         </div>
       </div>
 
-      {isMobileMenuOpen && (
-        <nav className="md:hidden bg-stream-darker border-t border-gray-800 py-4 animate-fade-in">
-          <div className="container mx-auto px-4 flex flex-col space-y-3">
-            <MobileNavItem to="/" icon={<Home className="h-5 w-5 mr-3" />} label="Accueil" onClick={() => setIsMobileMenuOpen(false)} />
-            <MobileNavItem to="/music" icon={<Music className="h-5 w-5 mr-3" />} label="Musique" onClick={() => setIsMobileMenuOpen(false)} />
-            <MobileNavItem to="/films" icon={<Film className="h-5 w-5 mr-3" />} label="Films" onClick={() => setIsMobileMenuOpen(false)} />
-            <MobileNavItem to="/series" icon={<Film className="h-5 w-5 mr-3" />} label="Séries" onClick={() => setIsMobileMenuOpen(false)} />
-            <MobileNavItem 
-              to="/tv" 
-              icon={
-                <div className="h-5 w-5 mr-3 overflow-hidden rounded">
-                  <img 
-                    src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b" 
-                    alt="TV" 
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-              } 
-              label="TV" 
-              onClick={() => setIsMobileMenuOpen(false)} 
-            />
-            <MobileNavItem to="/celebrities" icon={<Users className="h-5 w-5 mr-3" />} label="Célébrités" onClick={() => setIsMobileMenuOpen(false)} />
-            <MobileNavItem to="/post" icon={<MessageSquare className="h-5 w-5 mr-3" />} label="Communauté" onClick={() => setIsMobileMenuOpen(false)} />
-            <MobileNavItem to="/sport" icon={<Film className="h-5 w-5 mr-3" />} label="Sport" onClick={() => setIsMobileMenuOpen(false)} />
-            
-            {isLoggedIn ? (
-              <Button 
-                variant="ghost" 
-                size="lg"
-                onClick={() => {
-                  handleLogout();
-                  setIsMobileMenuOpen(false);
-                }}
-                className="flex items-center justify-start text-white hover:text-red-500 w-full transform transition-all duration-300 hover:scale-105 hover:bg-stream-purple/20 active:scale-95"
-              >
-                <LogOut className="h-5 w-5 mr-3" />
-                Déconnexion
-              </Button>
-            ) : (
-              <Button 
-                variant="ghost" 
-                size="lg"
-                onClick={() => {
-                  navigate('/login');
-                  setIsMobileMenuOpen(false);
-                }}
-                className="flex items-center justify-start text-white hover:text-red-500 w-full transform transition-all duration-300 hover:scale-105 hover:bg-stream-purple/20 active:scale-95"
-              >
-                <LogIn className="h-5 w-5 mr-3" />
-                Connexion
-              </Button>
-            )}
-          </div>
-        </nav>
-      )}
+      <MobileMenu 
+        isOpen={isMobileMenuOpen} 
+        isLoggedIn={isLoggedIn} 
+        onClose={() => setIsMobileMenuOpen(false)} 
+        onLogout={handleLogout} 
+      />
     </header>
   );
 };
-
-type NavItemProps = {
-  to: string;
-  icon: React.ReactNode;
-  label: string;
-};
-
-const NavItem = ({ to, icon, label }: NavItemProps) => (
-  <Link
-    to={to}
-    className="flex items-center px-3 py-2 rounded-md text-sm font-medium text-white hover:bg-stream-purple/20 hover:text-stream-purple transition-all duration-300 transform hover:scale-105 active:scale-95"
-  >
-    {icon}
-    {label}
-  </Link>
-);
-
-type MobileNavItemProps = NavItemProps & {
-  onClick?: () => void;
-};
-
-const MobileNavItem = ({ to, icon, label, onClick }: MobileNavItemProps) => (
-  <Link
-    to={to}
-    className="flex items-center px-3 py-3 rounded-md text-base font-medium text-white hover:bg-stream-purple/20 hover:text-stream-purple transition-all duration-300 transform hover:scale-105 active:scale-95"
-    onClick={onClick}
-  >
-    {icon}
-    {label}
-  </Link>
-);
