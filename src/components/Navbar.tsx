@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Home, Music, Film, LogIn, LogOut, Users, MessageSquare } from 'lucide-react';
@@ -40,9 +41,20 @@ export const Navbar = () => {
       )}
     >
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between py-4">
+        <div className="flex items-center justify-between py-6">
           <Link to="/" className="flex items-center space-x-2 transform transition-all duration-300 hover:scale-105">
-            <span className="text-4xl font-bold text-[#ea384c] hover:text-stream-purple transition-colors">saba-streamX</span>
+            <span 
+              className="text-5xl font-bold transition-colors hover:text-stream-purple" 
+              style={{
+                fontFamily: 'Helvetica, Arial, sans-serif',
+                background: 'linear-gradient(to right, #FF8C00, #FFD700)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text'
+              }}
+            >
+              Saba-streamX
+            </span>
           </Link>
 
           <nav className="hidden md:flex items-center space-x-2">
@@ -64,8 +76,8 @@ export const Navbar = () => {
               label="TV" 
             />
             <NavItem to="/celebrities" icon={<Users className="h-5 w-5 mr-2" />} label="Célébrités" />
-            {/* Ajouter le lien vers la page Post */}
             <NavItem to="/post" icon={<MessageSquare className="h-5 w-5 mr-2" />} label="Communauté" />
+            <NavItem to="/sport" icon={<Film className="h-5 w-5 mr-2" />} label="Sport" />
             
             {isLoggedIn ? (
               <Button 
@@ -112,8 +124,8 @@ export const Navbar = () => {
       </div>
 
       {isMobileMenuOpen && (
-        <nav className="md:hidden bg-stream-darker border-t border-gray-800 py-2 animate-fade-in">
-          <div className="container mx-auto px-4 flex flex-col space-y-2">
+        <nav className="md:hidden bg-stream-darker border-t border-gray-800 py-4 animate-fade-in">
+          <div className="container mx-auto px-4 flex flex-col space-y-3">
             <MobileNavItem to="/" icon={<Home className="h-5 w-5 mr-3" />} label="Accueil" onClick={() => setIsMobileMenuOpen(false)} />
             <MobileNavItem to="/music" icon={<Music className="h-5 w-5 mr-3" />} label="Musique" onClick={() => setIsMobileMenuOpen(false)} />
             <MobileNavItem to="/films" icon={<Film className="h-5 w-5 mr-3" />} label="Films" onClick={() => setIsMobileMenuOpen(false)} />
@@ -133,8 +145,8 @@ export const Navbar = () => {
               onClick={() => setIsMobileMenuOpen(false)} 
             />
             <MobileNavItem to="/celebrities" icon={<Users className="h-5 w-5 mr-3" />} label="Célébrités" onClick={() => setIsMobileMenuOpen(false)} />
-            {/* Ajouter le lien vers la page Post dans le menu mobile */}
             <MobileNavItem to="/post" icon={<MessageSquare className="h-5 w-5 mr-3" />} label="Communauté" onClick={() => setIsMobileMenuOpen(false)} />
+            <MobileNavItem to="/sport" icon={<Film className="h-5 w-5 mr-3" />} label="Sport" onClick={() => setIsMobileMenuOpen(false)} />
             
             {isLoggedIn ? (
               <Button 
