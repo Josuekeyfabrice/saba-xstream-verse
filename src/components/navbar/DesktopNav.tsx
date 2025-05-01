@@ -1,5 +1,5 @@
 
-import { Home, Music, Film, LogIn, LogOut, Users, MessageSquare } from 'lucide-react';
+import { Home, Music, Film, LogIn, Users, MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { NavItem } from './NavItem';
@@ -36,22 +36,12 @@ export const DesktopNav = ({ isLoggedIn, onLogout }: DesktopNavProps) => {
       <NavItem to="/post" icon={<MessageSquare className="h-5 w-5 mr-2" />} label="Communauté" />
       <NavItem to="/sport" icon={<Film className="h-5 w-5 mr-2" />} label="Sport" />
       
-      {isLoggedIn ? (
-        <Button 
-          variant="ghost" 
-          size="lg" 
-          onClick={onLogout}
-          className="flex items-center text-white hover:text-red-500 transform transition-all duration-300 hover:scale-105 hover:bg-stream-purple/20 active:scale-95"
-        >
-          <LogOut className="h-5 w-5 mr-2" />
-          Déconnexion
-        </Button>
-      ) : (
+      {!isLoggedIn && (
         <Button 
           variant="ghost" 
           size="lg" 
           onClick={() => navigate('/login')}
-          className="flex items-center text-white hover:text-red-500 transform transition-all duration-300 hover:scale-105 hover:bg-stream-purple/20 active:scale-95"
+          className="flex items-center text-white hover:text-stream-purple transform transition-all duration-300 hover:scale-105 hover:bg-stream-purple/20 active:scale-95"
         >
           <LogIn className="h-5 w-5 mr-2" />
           Connexion
