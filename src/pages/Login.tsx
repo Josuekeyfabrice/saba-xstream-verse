@@ -1,13 +1,15 @@
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
-import { Mail, Lock } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -18,11 +20,21 @@ const Login = () => {
     const users = JSON.parse(localStorage.getItem("users") || "[]");
     
     // Vérifier si l'utilisateur existe et si le mot de passe correspond
-    const user = users.find((user: { email: string, password: string }) => 
+    const user = users.find((user: { email: string, password: string, verified: boolean }) => 
       user.email === email && user.password === password
     );
     
     if (user) {
+      // Vérifier si l'utilisateur a confirmé son email
+      if (!user.verified) {
+        toast({
+          variant: "destructive",
+          title: "Compte non vérifié",
+          description: "Veuillez vérifier votre email pour activer votre compte",
+        });
+        return;
+      }
+      
       // Authentification réussie - set localStorage values
       localStorage.setItem('isLoggedIn', 'true');
       localStorage.setItem('currentUser', JSON.stringify({ email: user.email, name: user.name }));
@@ -40,6 +52,43 @@ const Login = () => {
         description: "Email ou mot de passe incorrect",
       });
     }
+  };
+
+  const handleForgotPassword = () => {
+    if (!email) {
+      toast({
+        variant: "destructive",
+        title: "Email requis",
+        description: "Veuillez entrer votre email pour réinitialiser votre mot de passe",
+      });
+      return;
+    }
+    
+    // Vérifier si l'email existe dans la base de données
+    const users = JSON.parse(localStorage.getItem("users") || "[]");
+    const userExists = users.some((user: { email: string }) => user.email === email);
+    
+    if (!userExists) {
+      toast({
+        variant: "destructive",
+        title: "Email inconnu",
+        description: "Aucun compte associé à cet email",
+      });
+      return;
+    }
+    
+    // Simuler l'envoi d'un email de réinitialisation
+    toast({
+      title: "Email envoyé",
+      description: "Instructions de réinitialisation envoyées à votre adresse email",
+    });
+    
+    // Dans un cas réel, vous enverriez un email avec un lien de réinitialisation
+    console.log(`Réinitialisation de mot de passe demandée pour: ${email}`);
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -73,14 +122,31 @@ const Login = () => {
               <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
               <Input
                 id="password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
                 required
-                className="w-full pl-10 transition-all duration-300 hover:border-stream-purple focus:ring-stream-purple"
+                className="w-full pl-10 pr-10 transition-all duration-300 hover:border-stream-purple focus:ring-stream-purple"
               />
+              <button 
+                type="button"
+                onClick={togglePasswordVisibility}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-stream-purple"
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
             </div>
+          </div>
+          
+          <div className="flex justify-end">
+            <button
+              type="button"
+              onClick={handleForgotPassword}
+              className="text-sm text-blue-300 hover:text-blue-200 hover:underline transition-all"
+            >
+              Mot de passe oublié?
+            </button>
           </div>
           
           <Button 

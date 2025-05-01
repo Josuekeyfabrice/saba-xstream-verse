@@ -4,13 +4,15 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
-import { Mail, Lock, User } from "lucide-react";
+import { Mail, Lock, User, Eye, EyeOff } from "lucide-react";
 
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -51,18 +53,51 @@ const Register = () => {
       return;
     }
     
-    // Enregistrer l'utilisateur dans le localStorage
-    const newUser = { name, email, password };
+    // Enregistrer l'utilisateur dans le localStorage avec le statut non vérifié
+    const newUser = { name, email, password, verified: false };
     users.push(newUser);
     localStorage.setItem("users", JSON.stringify(users));
     
+    // Simuler l'envoi d'un email de vérification
+    simulateEmailVerification(email);
+    
     toast({
       title: "Inscription réussie",
-      description: "Votre compte a été créé avec succès",
+      description: "Un email de confirmation a été envoyé à votre adresse. Veuillez vérifier votre boîte de réception.",
     });
     
-    // Redirection vers la page de connexion
+    // Redirection vers la page de confirmation
     navigate('/login');
+  };
+
+  const simulateEmailVerification = (userEmail: string) => {
+    console.log(`Email de vérification envoyé à: ${userEmail}`);
+    
+    // Simuler la vérification automatique après 3 secondes
+    // Dans un cas réel, l'utilisateur cliquerait sur un lien dans l'email
+    setTimeout(() => {
+      const users = JSON.parse(localStorage.getItem("users") || "[]");
+      const updatedUsers = users.map((user: any) => {
+        if (user.email === userEmail) {
+          return { ...user, verified: true };
+        }
+        return user;
+      });
+      
+      localStorage.setItem("users", JSON.stringify(updatedUsers));
+      console.log(`Email vérifié pour: ${userEmail}`);
+    }, 3000);
+    
+    // Ouvrir Gmail dans un nouvel onglet pour simuler le processus
+    window.open("https://mail.google.com", "_blank");
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+  
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
   };
 
   return (
@@ -114,13 +149,20 @@ const Register = () => {
               <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
               <Input
                 id="password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
                 required
-                className="w-full pl-10 transition-all duration-300 hover:border-stream-purple focus:ring-stream-purple"
+                className="w-full pl-10 pr-10 transition-all duration-300 hover:border-stream-purple focus:ring-stream-purple"
               />
+              <button 
+                type="button"
+                onClick={togglePasswordVisibility}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-stream-purple"
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
             </div>
           </div>
           
@@ -132,13 +174,20 @@ const Register = () => {
               <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
               <Input
                 id="confirmPassword"
-                type="password"
+                type={showConfirmPassword ? "text" : "password"}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="••••••••"
                 required
-                className="w-full pl-10 transition-all duration-300 hover:border-stream-purple focus:ring-stream-purple"
+                className="w-full pl-10 pr-10 transition-all duration-300 hover:border-stream-purple focus:ring-stream-purple"
               />
+              <button 
+                type="button"
+                onClick={toggleConfirmPasswordVisibility}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-stream-purple"
+              >
+                {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
             </div>
           </div>
           
