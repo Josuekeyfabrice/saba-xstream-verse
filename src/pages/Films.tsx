@@ -1,8 +1,12 @@
 
+import { useState } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { ContentCarousel, ContentItem } from "@/components/ContentCarousel";
 import { Footer } from "@/components/Footer";
+import { Play, Video } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 // Mock data
 const heroData = {
@@ -16,10 +20,10 @@ const heroData = {
 
 // Mock content for carousels
 const actionFilms: ContentItem[] = [
-  { id: "1", title: "Mission Impossible", imageUrl: "https://images.unsplash.com/photo-1535303311164-664fc9ec6532?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80", type: "film", year: "2023", rating: "PG-13" },
-  { id: "2", title: "Fast & Furious", imageUrl: "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1783&q=80", type: "film", year: "2021", rating: "PG-13" },
-  { id: "3", title: "The Batman", imageUrl: "https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1756&q=80", type: "film", year: "2022", rating: "PG-13" },
-  { id: "4", title: "John Wick", imageUrl: "https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80", type: "film", year: "2023", rating: "R" },
+  { id: "1", title: "Chasse à l'Homme", imageUrl: "https://images.unsplash.com/photo-1535303311164-664fc9ec6532?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80", type: "film", year: "2023", rating: "PG-13" },
+  { id: "2", title: "Commando", imageUrl: "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1783&q=80", type: "film", year: "2021", rating: "PG-13" },
+  { id: "3", title: "Opération Secrète", imageUrl: "https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1756&q=80", type: "film", year: "2022", rating: "PG-13" },
+  { id: "4", title: "Mercenaires", imageUrl: "https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80", type: "film", year: "2023", rating: "R" },
   { id: "5", title: "Extraction", imageUrl: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1625&q=80", type: "film", year: "2020", rating: "R" },
   { id: "6", title: "The Gray Man", imageUrl: "https://images.unsplash.com/photo-1614854262340-ab1ca7fb56c0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80", type: "film", year: "2022", rating: "PG-13" },
 ];
@@ -42,7 +46,57 @@ const comedyFilms: ContentItem[] = [
   { id: "18", title: "Thor: Love & Thunder", imageUrl: "https://images.unsplash.com/photo-1608346128025-1896b97a6fa7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80", type: "film", year: "2022", rating: "PG-13" },
 ];
 
+// Détails pour les films d'action en vedette
+const featuredActionFilms = [
+  {
+    id: "action-1",
+    title: "Chasse à l'Homme",
+    description: "Un ex-agent des forces spéciales est traqué par son ancien mentor dans une chasse à l'homme impitoyable à travers les montagnes isolées. Suspense et action garantis dans ce thriller haletant.",
+    imageUrl: "https://images.unsplash.com/photo-1535303311164-664fc9ec6532?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80",
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    director: "David Reynolds",
+    duration: "1h 58min",
+    year: "2023",
+    rating: "PG-13"
+  },
+  {
+    id: "action-2",
+    title: "Commando",
+    description: "Un soldat d'élite sort de sa retraite pour sauver sa fille kidnappée par un cartel dangereux. Il devra utiliser toutes ses compétences pour infiltrer une forteresse imprenable.",
+    imageUrl: "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1783&q=80",
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    director: "Sarah Mitchell",
+    duration: "2h 12min",
+    year: "2021",
+    rating: "PG-13"
+  },
+  {
+    id: "action-3",
+    title: "Opération Secrète",
+    description: "Une équipe d'agents secrets internationaux est rassemblée pour déjouer une attaque terroriste mondiale. Une course contre la montre commence à travers plusieurs capitales.",
+    imageUrl: "https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1756&q=80",
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    director: "Michael Chen",
+    duration: "2h 05min",
+    year: "2022",
+    rating: "PG-13"
+  },
+  {
+    id: "action-4",
+    title: "Mercenaires",
+    description: "Un groupe de mercenaires est embauché pour renverser un dictateur dans un pays déchiré par la guerre. Les loyautés sont mises à l'épreuve quand ils découvrent une conspiration plus vaste.",
+    imageUrl: "https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80",
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    director: "Elena Rodriguez",
+    duration: "2h 18min",
+    year: "2023",
+    rating: "R"
+  }
+];
+
 const Films = () => {
+  const [selectedFilm, setSelectedFilm] = useState<any>(null);
+
   return (
     <div className="min-h-screen bg-stream-dark text-white">
       <Navbar />
@@ -57,6 +111,64 @@ const Films = () => {
           type={heroData.type}
         />
         
+        {/* Section films d'action en vedette avec possibilité de visionnage */}
+        <div className="content-container my-10">
+          <h2 className="text-2xl font-bold mb-6">Films d'Action en Vedette</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {featuredActionFilms.map((film) => (
+              <div key={film.id} className="relative group overflow-hidden rounded-lg">
+                <img 
+                  src={film.imageUrl} 
+                  alt={film.title} 
+                  className="w-full aspect-[2/3] object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent opacity-100 transition-opacity flex flex-col justify-end p-4">
+                  <h3 className="text-xl font-bold mb-1">{film.title}</h3>
+                  <div className="flex items-center gap-2 text-xs text-gray-300 mb-3">
+                    <span>{film.year}</span>
+                    <span className="w-1 h-1 rounded-full bg-gray-400"></span>
+                    <span>{film.duration}</span>
+                    <span className="w-1 h-1 rounded-full bg-gray-400"></span>
+                    <span className="bg-stream-purple/80 px-1.5 py-0.5 rounded">{film.rating}</span>
+                  </div>
+                  <p className="text-sm text-gray-300 line-clamp-2 mb-3">{film.description}</p>
+                  
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button className="w-full flex items-center justify-center gap-2" onClick={() => setSelectedFilm(film)}>
+                        <Play className="h-4 w-4" /> Regarder
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-4xl">
+                      <DialogHeader>
+                        <DialogTitle>{film.title} ({film.year})</DialogTitle>
+                      </DialogHeader>
+                      <div className="aspect-video">
+                        <iframe 
+                          src={`${film.videoUrl}?autoplay=1`}
+                          title={film.title}
+                          className="w-full h-full"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                        ></iframe>
+                      </div>
+                      <div className="mt-4 space-y-2">
+                        <p className="text-sm text-gray-200">{film.description}</p>
+                        <div className="flex flex-wrap gap-4 text-sm text-gray-300">
+                          <div><span className="font-medium text-white">Réalisateur:</span> {film.director}</div>
+                          <div><span className="font-medium text-white">Durée:</span> {film.duration}</div>
+                          <div><span className="font-medium text-white">Classification:</span> {film.rating}</div>
+                        </div>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        
+        {/* Sections de films existantes */}
         <div className="content-container">
           <ContentCarousel title="Films d'Action" items={actionFilms} />
           <ContentCarousel title="Science Fiction" items={scifiFilms} />
