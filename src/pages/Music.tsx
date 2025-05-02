@@ -1,8 +1,19 @@
-
+import { useState } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { ContentCarousel, ContentItem } from "@/components/ContentCarousel";
 import { Footer } from "@/components/Footer";
+import { Play, Pause, Video } from "lucide-react";
+import { 
+  Card, 
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle, 
+  CardDescription 
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 // Mock data
 const heroData = {
@@ -42,7 +53,60 @@ const genres: ContentItem[] = [
   { id: "18", title: "Classique", imageUrl: "https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80", type: "music", year: "2023" },
 ];
 
+// Nouvelles données pour les vidéos musicales
+const musicVideos = [
+  {
+    id: "1",
+    title: "Summer Vibes - Live Session",
+    description: "Performance live exclusive avec des artistes émergents de la scène électronique",
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    thumbnailUrl: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
+    artist: "DJ ElectroGroove",
+    duration: "4:32"
+  },
+  {
+    id: "2",
+    title: "Urban Beats - Official Video",
+    description: "Le dernier clip officiel qui fait sensation dans le monde du hip-hop",
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    thumbnailUrl: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1674&q=80",
+    artist: "MC UrbanFlow",
+    duration: "3:45"
+  },
+  {
+    id: "3",
+    title: "Acoustic Melodies - Unplugged",
+    description: "Une session acoustique intime qui vous touchera droit au cœur",
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    thumbnailUrl: "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
+    artist: "Melody Makers",
+    duration: "5:18"
+  },
+];
+
 const Music = () => {
+  const [currentVideo, setCurrentVideo] = useState<string | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [videoDetails, setVideoDetails] = useState({
+    title: "",
+    description: "",
+    artist: ""
+  });
+
+  const handlePlayVideo = (video: any) => {
+    setCurrentVideo(video.videoUrl);
+    setVideoDetails({
+      title: video.title,
+      description: video.description,
+      artist: video.artist
+    });
+    setIsPlaying(true);
+  };
+
+  const togglePlayPause = () => {
+    setIsPlaying(!isPlaying);
+  };
+
   return (
     <div className="min-h-screen bg-stream-dark text-white">
       <Navbar />
@@ -57,6 +121,73 @@ const Music = () => {
           type={heroData.type}
         />
         
+        {/* Nouvelle section de lecteur vidéo */}
+        <div className="content-container mt-8">
+          <h2 className="text-2xl font-bold mb-6">Vidéos Musicales</h2>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
+            {musicVideos.map((video) => (
+              <Card key={video.id} className="glass-card overflow-hidden">
+                <div className="relative">
+                  <img 
+                    src={video.thumbnailUrl} 
+                    alt={video.title} 
+                    className="w-full h-48 object-cover" 
+                  />
+                  <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <Button 
+                          variant="ghost" 
+                          size="icon"
+                          className="rounded-full bg-white/20 hover:bg-white/40 backdrop-blur-sm"
+                          onClick={() => handlePlayVideo(video)}
+                        >
+                          <Play className="h-8 w-8 text-white fill-white" />
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent className="sm:max-w-4xl">
+                        <DialogHeader>
+                          <DialogTitle>{video.title}</DialogTitle>
+                        </DialogHeader>
+                        <div className="aspect-video">
+                          <iframe 
+                            src={`${video.videoUrl}?autoplay=1`}
+                            title={video.title}
+                            className="w-full h-full"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                          ></iframe>
+                        </div>
+                        <p className="text-sm text-gray-300 mt-2">{video.description}</p>
+                      </DialogContent>
+                    </Dialog>
+                  </div>
+                  <div className="absolute bottom-2 right-2 bg-black/70 px-2 py-1 rounded text-xs">
+                    {video.duration}
+                  </div>
+                </div>
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-lg">{video.title}</CardTitle>
+                  <CardDescription className="text-white/70">{video.artist}</CardDescription>
+                </CardHeader>
+                <CardContent className="pb-3">
+                  <p className="text-sm text-gray-300 line-clamp-2">{video.description}</p>
+                </CardContent>
+                <CardFooter>
+                  <Button 
+                    className="w-full" 
+                    size="sm"
+                    onClick={() => handlePlayVideo(video)}
+                  >
+                    <Video className="mr-2 h-4 w-4" /> Voir la vidéo
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
+        </div>
+        
+        {/* Sections de playlists existantes */}
         <div className="content-container">
           <ContentCarousel title="Nouvelles Sorties" items={newReleases} />
           <ContentCarousel title="Playlists Populaires" items={popularPlaylists} />
