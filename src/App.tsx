@@ -12,7 +12,9 @@ import Music from "./pages/Music";
 import TV from "./pages/TV";
 import Celebrities from "./pages/Celebrities";
 import Post from "./pages/Post";
-import Sport from "./pages/Sport"; // Import de la nouvelle page Sport
+import Sport from "./pages/Sport";
+import Politique from "./pages/Politique"; // Import the new Politique page
+import Religion from "./pages/Religion"; // Import the new Religion page
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
@@ -88,12 +90,28 @@ const App = () => {
                 </ProtectedRoute>
               }
             />
-            {/* Ajout de la nouvelle route Sport */}
             <Route
               path="/sport"
               element={
                 <ProtectedRoute>
                   <Sport />
+                </ProtectedRoute>
+              }
+            />
+            {/* Add new routes for Politique and Religion */}
+            <Route
+              path="/politique"
+              element={
+                <ProtectedRoute>
+                  <Politique />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/religion"
+              element={
+                <ProtectedRoute>
+                  <Religion />
                 </ProtectedRoute>
               }
             />
