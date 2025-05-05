@@ -1,11 +1,14 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LineChart, Line, CartesianGrid, Tooltip, Legend } from "recharts";
 import { ChevronUp, Users, Activity, TrendingUp, TrendingDown } from "lucide-react";
+import { ProfileEditor } from "@/components/profile/ProfileEditor";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 
 const pageViewsData = [
   { name: "Films", views: 4000, visits: 2400 },
@@ -58,6 +61,52 @@ const trendingContentData = [
 
 const Celebrities = () => {
   const [currentPeriod, setCurrentPeriod] = useState("today");
+  const [isProfileEditorOpen, setIsProfileEditorOpen] = useState(false);
+  const [userProfile, setUserProfile] = useState({
+    name: "Utilisateur",
+    firstName: "",
+    lastName: "",
+    imageUrl: "https://api.dicebear.com/7.x/initials/svg?seed=U",
+    followers: 125,
+    likes: 430,
+    hearts: 78
+  });
+  const { toast } = useToast();
+  
+  useEffect(() => {
+    // Charger les données du profil depuis localStorage si elles existent
+    const storedProfile = localStorage.getItem("userProfile");
+    if (storedProfile) {
+      try {
+        const parsedProfile = JSON.parse(storedProfile);
+        setUserProfile(prev => ({...prev, ...parsedProfile}));
+      } catch (error) {
+        console.error("Erreur lors du chargement du profil:", error);
+      }
+    }
+  }, []);
+
+  const handlePeriodChange = (period) => {
+    if (period !== "today") {
+      toast({
+        title: "Période non disponible",
+        description: `Vous n'avez pas encore atteint la totalité de ces jours sur Saba-StreamX.`,
+        variant: "destructive",
+      });
+    }
+    setCurrentPeriod(period);
+  };
+
+  const handleProfileUpdate = (updatedProfile) => {
+    const newProfile = {...userProfile, ...updatedProfile};
+    setUserProfile(newProfile);
+    localStorage.setItem("userProfile", JSON.stringify(newProfile));
+    setIsProfileEditorOpen(false);
+    toast({
+      title: "Profil mis à jour",
+      description: "Vos informations ont été enregistrées avec succès.",
+    });
+  };
   
   return (
     <div className="min-h-screen bg-stream-dark flex flex-col">
@@ -69,12 +118,56 @@ const Celebrities = () => {
             <p className="text-gray-400">Découvrez les célébrités populaires et les tendances de la plateforme</p>
           </div>
 
+          {/* User Profile Card */}
+          <Card className="bg-stream-darker text-white mb-8">
+            <CardHeader>
+              <div className="flex justify-between items-center">
+                <CardTitle>Mon Profil</CardTitle>
+                <Button 
+                  variant="outline" 
+                  onClick={() => setIsProfileEditorOpen(true)}
+                  className="bg-stream-purple/20 text-stream-purple border-stream-purple hover:bg-stream-purple hover:text-white"
+                >
+                  Modifier mon profil
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center space-x-6">
+                <div className="h-24 w-24 rounded-full overflow-hidden">
+                  <img 
+                    src={userProfile.imageUrl} 
+                    alt="Photo de profil" 
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold mb-2">{userProfile.name}</h3>
+                  <div className="flex space-x-6 text-sm">
+                    <div className="flex items-center">
+                      <Users className="h-4 w-4 mr-1" />
+                      <span><strong>{userProfile.followers}</strong> abonnés</span>
+                    </div>
+                    <div className="flex items-center">
+                      <span className="mr-1">👍</span>
+                      <span><strong>{userProfile.likes}</strong> likes</span>
+                    </div>
+                    <div className="flex items-center">
+                      <span className="mr-1">❤️</span>
+                      <span><strong>{userProfile.hearts}</strong> cœurs</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
           <div className="mb-8 flex items-center">
             <div className="flex space-x-2">
               {["today", "week", "month"].map((period) => (
                 <button
                   key={period}
-                  onClick={() => setCurrentPeriod(period)}
+                  onClick={() => handlePeriodChange(period)}
                   className={`px-4 py-2 rounded-md text-sm font-medium ${
                     currentPeriod === period
                       ? "bg-stream-purple text-white"
@@ -301,6 +394,15 @@ const Celebrities = () => {
         </div>
       </main>
       <Footer />
+      
+      {/* Profile Editor Dialog */}
+      {isProfileEditorOpen && (
+        <ProfileEditor 
+          profile={userProfile}
+          onSave={handleProfileUpdate}
+          onCancel={() => setIsProfileEditorOpen(false)}
+        />
+      )}
     </div>
   );
 };
