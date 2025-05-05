@@ -2,6 +2,9 @@ import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { ContentCarousel, ContentItem } from "@/components/ContentCarousel";
 import { Footer } from "@/components/Footer";
+import { FilmIcon, TvIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 // Mock data
 const heroData = {
@@ -161,6 +164,24 @@ const tvShows: ContentItem[] = [
   { id: "24", title: "Talk with Stars", imageUrl: "https://images.unsplash.com/photo-1518374361665-f5171864e4a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1568&q=80", type: "tv", year: "2023" },
 ];
 
+const bestMovie = {
+  id: "best-movie",
+  title: "Dune: Part Two",
+  description: "Paul Atreides s'unit à Chani et aux Fremen tout en préparant sa revanche contre les conspirateurs qui ont détruit sa famille. Face à un choix entre l'amour de sa vie et le destin de l'univers, il s'efforce d'empêcher un terrible futur que lui seul peut prévoir.",
+  imageUrl: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
+  rating: "PG-13",
+  year: "2024"
+};
+
+const bestSeries = {
+  id: "best-series",
+  title: "House of the Dragon",
+  description: "Située 200 ans avant Game of Thrones, cette série raconte l'histoire de la Maison Targaryen, ses conflits internes et la guerre civile dévastatrice connue sous le nom de « Danse des Dragons ».",
+  imageUrl: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
+  rating: "18+", 
+  year: "2022"
+};
+
 const Index = () => {
   return (
     <div className="min-h-screen bg-stream-dark text-white">
@@ -175,6 +196,94 @@ const Index = () => {
           buttonLink={heroData.buttonLink}
           type={heroData.type}
         />
+        
+        {/* Featured Best Movie Section */}
+        <section className="py-12 px-4 bg-gradient-to-b from-stream-darker to-stream-dark">
+          <div className="container mx-auto">
+            <div className="flex items-center mb-6">
+              <FilmIcon className="w-6 h-6 text-stream-purple mr-2" />
+              <h2 className="text-2xl font-bold text-white">Meilleur Film</h2>
+            </div>
+            
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div className="lg:col-span-1">
+                <div className="relative rounded-lg overflow-hidden h-[400px]">
+                  <img 
+                    src={bestMovie.imageUrl} 
+                    alt={bestMovie.title} 
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute top-2 right-2 bg-stream-purple px-2 py-1 rounded text-sm font-medium">
+                    {bestMovie.rating}
+                  </div>
+                </div>
+              </div>
+              
+              <div className="lg:col-span-2 flex flex-col justify-center">
+                <h3 className="text-3xl font-bold mb-2">{bestMovie.title}</h3>
+                <div className="flex items-center mb-4">
+                  <span className="text-stream-purple font-medium mr-3">{bestMovie.year}</span>
+                  <span className="text-gray-400">Film à succès mondial</span>
+                </div>
+                <p className="text-gray-300 mb-6 text-lg">{bestMovie.description}</p>
+                <div className="flex flex-wrap gap-4">
+                  <Button 
+                    asChild
+                    size="lg"
+                    className="bg-stream-purple hover:bg-stream-purple/90"
+                  >
+                    <Link to="/films">Regarder maintenant</Link>
+                  </Button>
+                  <Button variant="outline" size="lg">Ajouter à ma liste</Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        {/* Featured Best Series Section */}
+        <section className="py-12 px-4 bg-stream-dark">
+          <div className="container mx-auto">
+            <div className="flex items-center mb-6">
+              <TvIcon className="w-6 h-6 text-stream-purple mr-2" />
+              <h2 className="text-2xl font-bold text-white">Meilleure Série</h2>
+            </div>
+            
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div className="lg:col-span-2 flex flex-col justify-center lg:order-1 order-2">
+                <h3 className="text-3xl font-bold mb-2">{bestSeries.title}</h3>
+                <div className="flex items-center mb-4">
+                  <span className="text-stream-purple font-medium mr-3">{bestSeries.year}</span>
+                  <span className="text-gray-400">Série à succès mondial</span>
+                </div>
+                <p className="text-gray-300 mb-6 text-lg">{bestSeries.description}</p>
+                <div className="flex flex-wrap gap-4">
+                  <Button 
+                    asChild
+                    size="lg"
+                    className="bg-stream-purple hover:bg-stream-purple/90"
+                  >
+                    <Link to="/series">Regarder maintenant</Link>
+                  </Button>
+                  <Button variant="outline" size="lg">Ajouter à ma liste</Button>
+                </div>
+              </div>
+              
+              <div className="lg:col-span-1 lg:order-2 order-1">
+                <div className="relative rounded-lg overflow-hidden h-[400px]">
+                  <img 
+                    src={bestSeries.imageUrl} 
+                    alt={bestSeries.title} 
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute top-2 right-2 bg-stream-purple px-2 py-1 rounded text-sm font-medium">
+                    {bestSeries.rating}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
         
         <div className="content-container">
           <ContentCarousel title="Films Tendance" items={trendingFilms} />
