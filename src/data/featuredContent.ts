@@ -1,3 +1,4 @@
+
 import { ContentItem } from "@/components/ContentCarousel";
 
 // Mock data for the hero section
@@ -116,4 +117,18 @@ export const scandinavianFilms: ContentItem[] = [
   { id: "85", title: "Let the Right One In", imageUrl: "https://images.unsplash.com/photo-1584905066893-7d5c142ba4e1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1587&q=80", type: "film", year: "2008", rating: "16+" },
   { id: "86", title: "The Girl with the Dragon Tattoo", imageUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1964&q=80", type: "film", year: "2009", rating: "18+" },
   { id: "87", title: "A Man Called Ove", imageUrl: "https://images.unsplash.com/photo-1505253758473-96b7015fcd40?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1600&q=80", type: "film", year: "2015", rating: "12+" },
-  { id: "88", title: "Festen", imageUrl: "https://images.unsplash.com/photo-1561731216-c3a4d99437d5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHx
+  { id: "88", title: "Festen", imageUrl: "https://images.unsplash.com/photo-1561731216-c3a4d99437d5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80", type: "film", year: "1998", rating: "18+" },
+];
+
+// Define the content categories that will be displayed on the home page
+export const contentCategories = [
+  { title: "Films Tendance", items: trendingFilms },
+  { title: "Films Africains", items: africanFilms },
+  { title: "Films Américains", items: americanFilms },
+  { title: "Films Mexicains", items: mexicanFilms },
+  { title: "Films Français", items: frenchFilms },
+  { title: "Films Asiatiques", items: asianFilms },
+  { title: "Films Bollywoodiens", items: bollywoodFilms },
+  { title: "Films Moyen-Orientaux", items: middleEasternFilms },
+  { title: "Films Scandinaves", items: scandinavianFilms },
+];
