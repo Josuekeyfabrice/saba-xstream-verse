@@ -1,5 +1,5 @@
 
-import { Home, Music, Film, LogIn, LogOut, Users, MessageSquare, Flag, Church } from 'lucide-react';
+import { Home, Music, Film, LogIn, LogOut, Users, MessageSquare, Flag, Church, Bible } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { MobileNavItem } from './MobileNavItem';
@@ -41,7 +41,6 @@ export const MobileMenu = ({ isOpen, isLoggedIn, onClose, onLogout }: MobileMenu
         <MobileNavItem to="/celebrities" icon={<Users className="h-5 w-5 mr-3" />} label="Célébrités" onClick={onClose} />
         <MobileNavItem to="/post" icon={<MessageSquare className="h-5 w-5 mr-3" />} label="Communauté" onClick={onClose} />
         <MobileNavItem to="/sport" icon={<Film className="h-5 w-5 mr-3" />} label="Sport" onClick={onClose} />
-        {/* Add new navigation items for Politique and Religion */}
         <MobileNavItem to="/politique" icon={<Flag className="h-5 w-5 mr-3" />} label="Politique" onClick={onClose} />
         <MobileNavItem to="/religion" icon={<Church className="h-5 w-5 mr-3" />} label="Religion" onClick={onClose} />
         

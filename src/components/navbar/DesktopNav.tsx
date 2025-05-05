@@ -1,5 +1,5 @@
 
-import { Home, Music, Film, LogIn, Users, MessageSquare, Flag, Church } from 'lucide-react';
+import { Home, Music, Film, LogIn, Users, MessageSquare, Flag, Church, Bible } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { NavItem } from './NavItem';
@@ -35,7 +35,6 @@ export const DesktopNav = ({ isLoggedIn, onLogout }: DesktopNavProps) => {
       <NavItem to="/celebrities" icon={<Users className="h-5 w-5 mr-2" />} label="Célébrités" />
       <NavItem to="/post" icon={<MessageSquare className="h-5 w-5 mr-2" />} label="Communauté" />
       <NavItem to="/sport" icon={<Film className="h-5 w-5 mr-2" />} label="Sport" />
-      {/* Add new navigation items for Politique and Religion */}
       <NavItem to="/politique" icon={<Flag className="h-5 w-5 mr-2" />} label="Politique" />
       <NavItem to="/religion" icon={<Church className="h-5 w-5 mr-2" />} label="Religion" />
       
