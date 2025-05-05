@@ -1,5 +1,5 @@
 
-import { Home, Music, Film, LogIn, LogOut, Users, MessageSquare, Flag, Church, Bible } from 'lucide-react';
+import { Home, Music, Film, LogIn, LogOut, Users, MessageSquare, Flag, Church } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { MobileNavItem } from './MobileNavItem';
