@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -21,15 +21,55 @@ interface PostProps {
   };
   onLike: (postId: string) => void;
   onComment: (postId: string, comment: string) => void;
+  socket?: any; // Socket instance
 }
 
-export const PostCard = ({ post, onLike, onComment }: PostProps) => {
+export const PostCard = ({ post, onLike, onComment, socket }: PostProps) => {
   const [comment, setComment] = useState("");
   const [showComments, setShowComments] = useState(false);
   const [isSubscribed, setIsSubscribed] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
+  const [typingUsers, setTypingUsers] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (socket) {
+      // Écouter les événements de frappe
+      socket.on(`typing:${post.id}`, (username: string) => {
+        setTypingUsers(prev => {
+          if (!prev.includes(username)) {
+            return [...prev, username];
+          }
+          return prev;
+        });
+        
+        // Effacer l'indicateur après 3 secondes
+        setTimeout(() => {
+          setTypingUsers(prev => prev.filter(user => user !== username));
+        }, 3000);
+      });
+    }
+    
+    return () => {
+      if (socket) {
+        socket.off(`typing:${post.id}`);
+      }
+    };
+  }, [post.id, socket]);
 
   const handleLike = () => {
     onLike(post.id);
+  };
+
+  const handleTyping = () => {
+    if (socket && !isTyping) {
+      socket.emit('typing', { postId: post.id, username: 'vous' });
+      setIsTyping(true);
+      
+      // Réinitialiser l'état de frappe après 2 secondes
+      setTimeout(() => {
+        setIsTyping(false);
+      }, 2000);
+    }
   };
 
   const handleSubmitComment = (e: React.FormEvent) => {
@@ -43,6 +83,14 @@ export const PostCard = ({ post, onLike, onComment }: PostProps) => {
 
   const handleSubscribe = () => {
     setIsSubscribed(!isSubscribed);
+    
+    if (socket) {
+      socket.emit('subscribe', { 
+        postId: post.id, 
+        username: post.username, 
+        action: !isSubscribed ? 'subscribe' : 'unsubscribe' 
+      });
+    }
   };
 
   return (
@@ -111,11 +159,18 @@ export const PostCard = ({ post, onLike, onComment }: PostProps) => {
         </div>
       </CardContent>
       <CardFooter className="flex flex-col items-stretch pt-0">
+        {typingUsers.length > 0 && (
+          <div className="text-xs text-gray-400 italic mb-2">
+            {typingUsers.join(', ')} {typingUsers.length === 1 ? 'est en train d\'écrire...' : 'sont en train d\'écrire...'}
+          </div>
+        )}
+        
         <form onSubmit={handleSubmitComment} className="flex gap-2 w-full">
           <Textarea 
             placeholder="Ajouter un commentaire..."
             value={comment}
             onChange={(e) => setComment(e.target.value)}
+            onKeyDown={handleTyping}
             className="min-h-10 py-2"
           />
           <Button 
@@ -130,7 +185,7 @@ export const PostCard = ({ post, onLike, onComment }: PostProps) => {
         </form>
         
         {showComments && (
-          <CommentSection postId={post.id} />
+          <CommentSection postId={post.id} socket={socket} />
         )}
       </CardFooter>
     </Card>

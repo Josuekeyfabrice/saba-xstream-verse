@@ -2,7 +2,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // Sample comments data
 const sampleComments = [
@@ -28,15 +28,49 @@ const sampleComments = [
 
 interface CommentSectionProps {
   postId: string;
+  socket?: any; // Socket instance
 }
 
-export const CommentSection = ({ postId }: CommentSectionProps) => {
+export const CommentSection = ({ postId, socket }: CommentSectionProps) => {
   const [comments, setComments] = useState(sampleComments);
+  const [realtimeIndicator, setRealtimeIndicator] = useState<string | null>(null);
+
+  // Écouter les nouveaux commentaires
+  useEffect(() => {
+    if (socket) {
+      // Simuler la réception de nouveaux commentaires
+      const handleNewComment = (data: any) => {
+        if (data.postId === postId) {
+          setComments(prev => [data.comment, ...prev]);
+          
+          // Afficher l'indicateur de temps réel
+          setRealtimeIndicator(`${data.comment.username} vient de commenter`);
+          setTimeout(() => setRealtimeIndicator(null), 3000);
+        }
+      };
+      
+      socket.on('newComment', handleNewComment);
+      
+      return () => {
+        socket.off('newComment', handleNewComment);
+      };
+    }
+  }, [postId, socket]);
 
   const handleLikeComment = (commentId: string) => {
     setComments(comments.map(comment => {
       if (comment.id === commentId) {
         const wasLiked = comment.isLiked;
+        
+        // Émettre l'événement de like de commentaire via WebSocket
+        if (socket) {
+          socket.emit('likeComment', { 
+            postId, 
+            commentId, 
+            liked: !wasLiked 
+          });
+        }
+        
         return {
           ...comment,
           isLiked: !wasLiked,
@@ -49,7 +83,15 @@ export const CommentSection = ({ postId }: CommentSectionProps) => {
 
   return (
     <div className="mt-4 space-y-4">
-      <h4 className="text-sm font-medium text-gray-400">Commentaires</h4>
+      <div className="flex items-center justify-between">
+        <h4 className="text-sm font-medium text-gray-400">Commentaires</h4>
+        
+        {realtimeIndicator && (
+          <div className="text-xs text-stream-purple bg-stream-purple/10 px-2 py-1 rounded-md animate-pulse">
+            {realtimeIndicator}
+          </div>
+        )}
+      </div>
       
       {comments.map(comment => (
         <div key={comment.id} className="flex gap-3 py-3 border-t border-gray-700">

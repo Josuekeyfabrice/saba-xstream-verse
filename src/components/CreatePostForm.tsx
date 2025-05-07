@@ -1,5 +1,5 @@
 
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -9,11 +9,13 @@ import { useToast } from "@/hooks/use-toast";
 
 interface CreatePostFormProps {
   onAddPost: (post: any) => void;
+  socket?: any; // Socket instance
 }
 
-export const CreatePostForm = ({ onAddPost }: CreatePostFormProps) => {
+export const CreatePostForm = ({ onAddPost, socket }: CreatePostFormProps) => {
   const [content, setContent] = useState("");
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
 
@@ -37,10 +39,12 @@ export const CreatePostForm = ({ onAddPost }: CreatePostFormProps) => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
     
     if (!content.trim() && !selectedImage) return;
+    
+    setIsSubmitting(true);
     
     const newPost = {
       id: Date.now().toString(),
@@ -54,15 +58,41 @@ export const CreatePostForm = ({ onAddPost }: CreatePostFormProps) => {
       timestamp: "À l'instant",
     };
     
-    onAddPost(newPost);
-    setContent("");
-    setSelectedImage(null);
-    
-    toast({
-      title: "Post publié !",
-      description: "Votre post a été publié avec succès.",
-    });
-  };
+    // Si nous avons un socket, émettons l'événement en temps réel
+    if (socket) {
+      socket.emit('newPost', newPost, (response: any) => {
+        if (response.success) {
+          onAddPost(newPost);
+          setContent("");
+          setSelectedImage(null);
+          setIsSubmitting(false);
+          
+          toast({
+            title: "Message publié !",
+            description: "Votre message a été partagé en temps réel avec la communauté.",
+          });
+        } else {
+          setIsSubmitting(false);
+          toast({
+            title: "Erreur",
+            description: "Impossible de publier votre message. Veuillez réessayer.",
+            variant: "destructive",
+          });
+        }
+      });
+    } else {
+      // Fallback si pas de socket
+      onAddPost(newPost);
+      setContent("");
+      setSelectedImage(null);
+      setIsSubmitting(false);
+      
+      toast({
+        title: "Post publié !",
+        description: "Votre post a été publié avec succès.",
+      });
+    }
+  }, [content, selectedImage, socket, onAddPost, toast]);
 
   const removeImage = () => {
     setSelectedImage(null);
@@ -129,10 +159,10 @@ export const CreatePostForm = ({ onAddPost }: CreatePostFormProps) => {
               <Button 
                 type="submit" 
                 className="bg-stream-purple hover:bg-stream-purple/90"
-                disabled={!content.trim() && !selectedImage}
+                disabled={(!content.trim() && !selectedImage) || isSubmitting}
               >
                 <Send className="mr-2 h-4 w-4" />
-                Publier
+                {isSubmitting ? "Envoi..." : "Publier"}
               </Button>
             </div>
           </form>
