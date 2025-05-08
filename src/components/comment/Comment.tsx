@@ -2,7 +2,7 @@
 import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Heart, MessageSquare, MoreHorizontal, Share } from "lucide-react";
+import { Heart, MessageSquare, MoreHorizontal } from "lucide-react";
 import { 
   DropdownMenu, 
   DropdownMenuContent, 
@@ -12,6 +12,7 @@ import {
 import { CommentProps } from "./types";
 import { CommentReply } from "./CommentReply";
 import { ReplyForm } from "./ReplyForm";
+import { SocialShareMenu } from "./SocialShareMenu";
 
 export const Comment: React.FC<CommentProps> = ({
   comment,
@@ -83,15 +84,8 @@ export const Comment: React.FC<CommentProps> = ({
               <span>Répondre</span>
             </Button>
             
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              className="flex items-center gap-1 text-gray-400 text-xs h-8 px-2"
-              onClick={() => handleShareComment(comment.id)}
-            >
-              <Share className="h-3 w-3" />
-              <span>Partager</span>
-            </Button>
+            {/* Remplacer le bouton de partage simple par le menu de partage social */}
+            <SocialShareMenu commentId={comment.id} commentText={comment.content} />
           </div>
           
           {/* Interface de réponse */}

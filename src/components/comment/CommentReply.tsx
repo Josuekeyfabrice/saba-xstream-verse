@@ -4,6 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Heart } from "lucide-react";
 import { CommentReplyProps } from "./types";
+import { SocialShareMenu } from "./SocialShareMenu";
 
 export const CommentReply: React.FC<CommentReplyProps> = ({
   reply,
@@ -36,6 +37,9 @@ export const CommentReply: React.FC<CommentReplyProps> = ({
             />
             <span>{reply.likes}</span>
           </Button>
+          
+          {/* Ajouter le menu de partage pour les réponses aussi */}
+          <SocialShareMenu commentId={reply.id} commentText={reply.content} />
         </div>
       </div>
     </div>
