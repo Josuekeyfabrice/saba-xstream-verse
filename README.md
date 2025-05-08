@@ -1,8 +1,9 @@
-# Welcome to your Lovable project
+
+# Welcome to saba-streamX
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/5d07384c-dd21-4062-a683-f4f008ba3e6c
+**URL**: https://saba-streamx.saba-industrie.com/
 
 ## How can I edit this code?
 
@@ -71,3 +72,4 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+
