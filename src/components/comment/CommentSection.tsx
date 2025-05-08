@@ -2,7 +2,7 @@
 import React from "react";
 import { CommentForm } from "./CommentForm";
 import { CommentList } from "./CommentList";
-import { useComments } from "./useComments";
+import { useComments } from "./hooks/useComments";
 
 interface CommentSectionProps {
   postId: string;

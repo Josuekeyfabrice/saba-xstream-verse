@@ -7,7 +7,7 @@ import {
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { Share, Facebook, Instagram, Twitter, Linkedin, Whatsapp } from "lucide-react";
+import { Share, Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface SocialShareMenuProps {
@@ -114,7 +114,7 @@ export const SocialShareMenu: React.FC<SocialShareMenuProps> = ({ commentId, com
           <span>LinkedIn</span>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={handleWhatsappShare} className="cursor-pointer flex items-center gap-2">
-          <Whatsapp className="h-4 w-4 text-green-600" />
+          <Share className="h-4 w-4 text-green-600" />
           <span>WhatsApp</span>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={handleSabaOngeya} className="cursor-pointer flex items-center gap-2">
