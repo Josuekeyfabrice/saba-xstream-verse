@@ -1,12 +1,14 @@
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { Mail, Lock, User, Eye, EyeOff, Phone } from "lucide-react";
 import { validateEmail, validatePhoneNumber } from "@/lib/utils";
 import { OTPVerification } from "./OTPVerification";
+import { InputField } from "./InputField";
+import { PasswordField } from "./PasswordField";
+import { LoginLink } from "./LoginLink";
 
 const RegisterForm = () => {
   const [name, setName] = useState("");
@@ -149,7 +151,7 @@ const RegisterForm = () => {
           
           <InputField
             id="phoneNumber"
-            label="Numéro de téléphone"
+            label="Numéro de téléphone par pays"
             type="tel"
             value={phoneNumber}
             onChange={(e) => setPhoneNumber(e.target.value)}
