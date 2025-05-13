@@ -146,7 +146,7 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#ea384c]">
+    <div className="min-h-screen flex items-center justify-center bg-white">
       <div className="glass-card p-8 w-full max-w-md transform hover:scale-105 transition-all duration-300">
         <h2 className="text-3xl font-bold mb-6 text-white text-center hover:text-stream-purple transition-colors">Créer un compte Saba</h2>
         
@@ -191,7 +191,7 @@ const Register = () => {
             
             <div className="transform transition-all duration-300 hover:-translate-y-1">
               <label htmlFor="phoneNumber" className="block text-sm font-medium text-white mb-1">
-                Numéro de téléphone (RDC)
+                Numéro de téléphone
               </label>
               <div className="relative">
                 <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
