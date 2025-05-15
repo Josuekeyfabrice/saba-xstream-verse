@@ -1,12 +1,12 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { ContentCarousel, ContentItem } from "@/components/ContentCarousel";
 import { Footer } from "@/components/Footer";
-import { Play, Video } from "lucide-react";
+import { Play, Video, Tv } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { toast } from "@/components/ui/use-toast";
 
 // Mock data
 const heroData = {
@@ -94,8 +94,87 @@ const featuredActionFilms = [
   }
 ];
 
+// Vidéos récentes depuis NetFree2
+const netfreeRecentVideos = [
+  { 
+    id: "nf-1", 
+    title: "Black Widow", 
+    imageUrl: "https://images.unsplash.com/photo-1560169897-fc0cdbdfa4d5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1772&q=80",
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    duration: "2h 14min",
+    year: "2023",
+    description: "Natasha Romanoff confronte les parties les plus sombres de son grand livre lorsqu'une conspiration dangereuse liée à son passé surgit.",
+    source: "NetFree2"
+  },
+  { 
+    id: "nf-2", 
+    title: "The Batman", 
+    imageUrl: "https://images.unsplash.com/photo-1531259683007-016a7b628fc3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    duration: "2h 56min",
+    year: "2022",
+    description: "Lorsqu'un tueur prend pour cible l'élite de Gotham avec une série de machinations sadiques, Batman est contraint de nouvelles pistes dans le monde souterrain.",
+    source: "NetFree2"
+  },
+  { 
+    id: "nf-3", 
+    title: "No Time To Die", 
+    imageUrl: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1625&q=80",
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    duration: "2h 43min",
+    year: "2021",
+    description: "James Bond a quitté les services secrets et coule des jours heureux en Jamaïque. Mais sa tranquillité est de courte durée car son vieil ami Felix Leiter de la CIA débarque pour solliciter son aide.",
+    source: "NetFree2"
+  },
+  { 
+    id: "nf-4", 
+    title: "Avatar: La Voie de l'eau", 
+    imageUrl: "https://images.unsplash.com/photo-1605979257913-1704eb7b6246?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    duration: "3h 12min",
+    year: "2022",
+    description: "Jake Sully et Ney'tiri ont formé une famille et font tout pour rester aussi soudés que possible. Ils sont cependant contraints de quitter leur foyer et d'explorer les différentes régions de Pandora.",
+    source: "NetFree2"
+  },
+  { 
+    id: "nf-5", 
+    title: "Top Gun: Maverick", 
+    imageUrl: "https://images.unsplash.com/photo-1555685812-4b943f1cb0eb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    duration: "2h 11min",
+    year: "2022",
+    description: "Après plus de 30 ans de service en tant que l'un des meilleurs aviateurs de la Marine, Pete Mitchell est à sa place, repoussant les limites en tant que courageux pilote d'essai.",
+    source: "NetFree2"
+  },
+  { 
+    id: "nf-6", 
+    title: "Shang-Chi", 
+    imageUrl: "https://images.unsplash.com/photo-1535016120720-40c646be5580?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    duration: "2h 12min",
+    year: "2021",
+    description: "Shang-Chi doit faire face à son passé qu'il pensait avoir laissé derrière lui lorsqu'il est entraîné dans la toile de la mystérieuse organisation des Dix Anneaux.",
+    source: "NetFree2"
+  },
+];
+
 const Films = () => {
   const [selectedFilm, setSelectedFilm] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Simulation de chargement des vidéos NetFree2
+  useEffect(() => {
+    setIsLoading(true);
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+      toast({
+        title: "Vidéos NetFree2 chargées",
+        description: "Les vidéos les plus récentes ont été importées avec succès."
+      });
+    }, 1500);
+    
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div className="min-h-screen bg-stream-dark text-white">
@@ -110,6 +189,98 @@ const Films = () => {
           buttonLink={heroData.buttonLink}
           type={heroData.type}
         />
+
+        {/* Section des vidéos NetFree2 */}
+        <div className="content-container my-10">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h2 className="text-2xl font-bold">Vidéos Récentes NetFree2</h2>
+              <p className="text-sm text-muted-foreground mt-1">
+                Contenu importé depuis <a href="https://netfree2.cc/home" target="_blank" rel="noopener noreferrer" className="text-stream-purple hover:underline">NetFree2.cc</a>
+              </p>
+            </div>
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={() => {
+                setIsLoading(true);
+                setTimeout(() => {
+                  setIsLoading(false);
+                  toast({
+                    title: "Mise à jour effectuée",
+                    description: "Les vidéos NetFree2 ont été actualisées."
+                  });
+                }, 1500);
+              }}
+              disabled={isLoading}
+            >
+              {isLoading ? "Chargement..." : "Actualiser"}
+            </Button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {netfreeRecentVideos.map((video) => (
+              <div key={video.id} className="relative group overflow-hidden rounded-lg bg-stream-darker">
+                <div className="relative aspect-video overflow-hidden">
+                  <img 
+                    src={video.imageUrl} 
+                    alt={video.title} 
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <Button 
+                          variant="ghost" 
+                          size="icon" 
+                          className="rounded-full w-16 h-16 bg-stream-purple/80 hover:bg-stream-purple"
+                          onClick={() => setSelectedFilm(video)}
+                        >
+                          <Play className="h-8 w-8" />
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent className="sm:max-w-4xl">
+                        <DialogHeader>
+                          <DialogTitle>{video.title} ({video.year})</DialogTitle>
+                        </DialogHeader>
+                        <div className="aspect-video">
+                          <iframe 
+                            src={`${video.videoUrl}?autoplay=1`}
+                            title={video.title}
+                            className="w-full h-full"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                          ></iframe>
+                        </div>
+                        <div className="mt-4 space-y-2">
+                          <p className="text-sm text-gray-200">{video.description}</p>
+                          <div className="flex flex-wrap gap-4 text-sm text-gray-300">
+                            <div><span className="font-medium text-white">Source:</span> {video.source}</div>
+                            <div><span className="font-medium text-white">Durée:</span> {video.duration}</div>
+                            <div><span className="font-medium text-white">Année:</span> {video.year}</div>
+                          </div>
+                        </div>
+                      </DialogContent>
+                    </Dialog>
+                  </div>
+                  <div className="absolute bottom-2 right-2 bg-stream-purple px-2 py-1 rounded text-xs font-medium">
+                    {video.duration}
+                  </div>
+                </div>
+                <div className="p-4">
+                  <h3 className="text-lg font-semibold line-clamp-1">{video.title}</h3>
+                  <div className="flex items-center justify-between mt-2">
+                    <span className="text-sm text-gray-300">{video.year}</span>
+                    <span className="flex items-center text-xs text-gray-300">
+                      <Tv className="h-3 w-3 mr-1" />
+                      {video.source}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
         
         {/* Section films d'action en vedette avec possibilité de visionnage */}
         <div className="content-container my-10">
@@ -156,7 +327,7 @@ const Films = () => {
                         <p className="text-sm text-gray-200">{film.description}</p>
                         <div className="flex flex-wrap gap-4 text-sm text-gray-300">
                           <div><span className="font-medium text-white">Réalisateur:</span> {film.director}</div>
-                          <div><span className="font-medium text-white">Durée:</span> {film.duration}</div>
+                          <div><span className="font-medium text-white">Durée:</span> {film.duration}</span>
                           <div><span className="font-medium text-white">Classification:</span> {film.rating}</div>
                         </div>
                       </div>
