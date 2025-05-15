@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
@@ -327,7 +328,7 @@ const Films = () => {
                         <p className="text-sm text-gray-200">{film.description}</p>
                         <div className="flex flex-wrap gap-4 text-sm text-gray-300">
                           <div><span className="font-medium text-white">Réalisateur:</span> {film.director}</div>
-                          <div><span className="font-medium text-white">Durée:</span> {film.duration}</span>
+                          <div><span className="font-medium text-white">Durée:</span> {film.duration}</div>
                           <div><span className="font-medium text-white">Classification:</span> {film.rating}</div>
                         </div>
                       </div>
