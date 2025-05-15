@@ -1,5 +1,5 @@
 
-import { Home, Music, Film, LogIn, Users, MessageSquare, Flag, Church } from 'lucide-react';
+import { Home, Music, Film, LogIn, Users, MessageSquare, Flag, Church, CreditCard } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { NavItem } from './NavItem';
@@ -37,6 +37,7 @@ export const DesktopNav = ({ isLoggedIn, onLogout }: DesktopNavProps) => {
       <NavItem to="/sport" icon={<Film className="h-5 w-5 mr-2" />} label="Sport" />
       <NavItem to="/politique" icon={<Flag className="h-5 w-5 mr-2" />} label="Politique" />
       <NavItem to="/religion" icon={<Church className="h-5 w-5 mr-2" />} label="Religion" />
+      <NavItem to="/payement" icon={<CreditCard className="h-5 w-5 mr-2" />} label="Paiement" />
       
       {!isLoggedIn && (
         <Button 

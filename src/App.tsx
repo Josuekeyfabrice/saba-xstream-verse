@@ -13,8 +13,9 @@ import TV from "./pages/TV";
 import Celebrities from "./pages/Celebrities";
 import Post from "./pages/Post";
 import Sport from "./pages/Sport";
-import Politique from "./pages/Politique"; // Import the new Politique page
-import Religion from "./pages/Religion"; // Import the new Religion page
+import Politique from "./pages/Politique"; 
+import Religion from "./pages/Religion"; 
+import Payement from "./pages/Payement"; // Importer la page de paiement
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
@@ -98,7 +99,7 @@ const App = () => {
                 </ProtectedRoute>
               }
             />
-            {/* Add new routes for Politique and Religion */}
+            {/* Route existantes pour Politique et Religion */}
             <Route
               path="/politique"
               element={
@@ -112,6 +113,15 @@ const App = () => {
               element={
                 <ProtectedRoute>
                   <Religion />
+                </ProtectedRoute>
+              }
+            />
+            {/* Ajouter la nouvelle route pour la page Payement */}
+            <Route
+              path="/payement"
+              element={
+                <ProtectedRoute>
+                  <Payement />
                 </ProtectedRoute>
               }
             />
