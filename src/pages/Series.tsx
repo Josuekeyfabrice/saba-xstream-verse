@@ -6,7 +6,7 @@ import { ContentCarousel } from "@/components/ContentCarousel";
 import { Footer } from "@/components/Footer";
 import { FeaturedSeries } from "@/components/featured/FeaturedSeries";
 import { NetFreeSeries } from "@/components/series/NetFreeSeries";
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "@/hooks/use-toast";
 import { 
   heroData, 
   dramaSeries, 
@@ -30,14 +30,14 @@ const Series = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-stream-dark text-white">
+    <div className="min-h-screen bg-[#121212] text-white bg-gradient-to-b from-stream-dark to-stream-darker">
       <Navbar />
       
       <main className="pt-16">
         <Hero 
           title={heroData.title}
           description={heroData.description}
-          backgroundImage={heroData.backgroundImage}
+          backgroundImage="https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop"
           buttonText={heroData.buttonText}
           buttonLink={heroData.buttonLink}
           type={heroData.type}

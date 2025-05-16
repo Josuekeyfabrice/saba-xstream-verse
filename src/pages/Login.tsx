@@ -92,10 +92,10 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#ea384c]">
+    <div className="min-h-screen flex items-center justify-center bg-white">
       <div className="glass-card p-8 w-full max-w-md transform hover:scale-105 transition-all duration-300">
         <h2 className="text-3xl font-bold mb-6 text-white text-center hover:text-stream-purple transition-colors">Saba Login</h2>
-        <form onSubmit={handleLogin} className="space-y-4">
+        <form onSubmit={handleLogin} className="space-y-3">
           <div className="transform transition-all duration-300 hover:-translate-y-1">
             <label htmlFor="email" className="block text-sm font-medium text-white mb-1">
               Email
@@ -109,7 +109,7 @@ const Login = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="votre@email.com"
                 required
-                className="w-full pl-10 transition-all duration-300 hover:border-stream-purple focus:ring-stream-purple"
+                className="w-full h-9 pl-10 transition-all duration-300 hover:border-stream-purple focus:ring-stream-purple"
               />
             </div>
           </div>
@@ -127,7 +127,7 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
                 required
-                className="w-full pl-10 pr-10 transition-all duration-300 hover:border-stream-purple focus:ring-stream-purple"
+                className="w-full h-9 pl-10 pr-10 transition-all duration-300 hover:border-stream-purple focus:ring-stream-purple"
               />
               <button 
                 type="button"
@@ -151,12 +151,12 @@ const Login = () => {
           
           <Button 
             type="submit" 
-            className="w-full h-12 text-lg transform transition-all duration-300 hover:scale-105 hover:bg-stream-purple/90 active:scale-95 animate-fade-in"
+            className="w-full h-10 text-base transform transition-all duration-300 hover:scale-105 hover:bg-stream-purple/90 active:scale-95 animate-fade-in"
           >
             Se connecter
           </Button>
           
-          <div className="text-center mt-4">
+          <div className="text-center mt-3">
             <p className="text-white">
               Vous n'avez pas de compte?{" "}
               <Link to="/register" className="text-blue-300 hover:text-blue-200 underline">

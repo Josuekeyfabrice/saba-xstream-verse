@@ -47,18 +47,19 @@ export const NetFreeSeries = ({ series }: NetFreeSeriesProps) => {
   };
 
   return (
-    <section className="py-8 px-4 bg-stream-darker/30">
+    <section className="py-8 px-4 bg-[#0A0A0A]/90 backdrop-blur-sm">
       <div className="container mx-auto">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center">
             <h2 className="text-2xl font-bold text-white">Séries TV NetFree2</h2>
-            <span className="ml-2 text-xs bg-stream-purple px-2 py-1 rounded-full">Nouveau</span>
+            <span className="ml-2 text-xs bg-stream-purple px-2 py-1 rounded-full">Populaire</span>
           </div>
           
           <Button 
             variant="outline" 
             onClick={handleRefresh}
             disabled={isLoading}
+            className="border-stream-purple hover:bg-stream-purple/20"
           >
             <RefreshCw className={`mr-2 h-4 w-4 ${isLoading ? "animate-spin" : ""}`} />
             Actualiser
