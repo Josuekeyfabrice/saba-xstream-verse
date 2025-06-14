@@ -75,7 +75,7 @@ export const MessagingProvider: React.FC<{ children: React.ReactNode }> = ({ chi
       receiverId: conversation.contactId,
       content,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      status: 'sent',
+      status: 'sent' as const,
       isOwn: true
     };
     
@@ -99,7 +99,7 @@ export const MessagingProvider: React.FC<{ children: React.ReactNode }> = ({ chi
           if (conv.id === conversationId) {
             const updatedMessages = conv.messages.map(msg => {
               if (msg.id === newMessage.id) {
-                return { ...msg, status: 'delivered' };
+                return { ...msg, status: 'delivered' as const };
               }
               return msg;
             });
