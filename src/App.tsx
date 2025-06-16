@@ -15,7 +15,9 @@ import Post from "./pages/Post";
 import Sport from "./pages/Sport";
 import Politique from "./pages/Politique"; 
 import Religion from "./pages/Religion"; 
-import Payement from "./pages/Payement"; // Importer la page de paiement
+import Payement from "./pages/Payement";
+import Profile from "./pages/Profile";
+import Settings from "./pages/Settings";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
@@ -99,7 +101,6 @@ const App = () => {
                 </ProtectedRoute>
               }
             />
-            {/* Route existantes pour Politique et Religion */}
             <Route
               path="/politique"
               element={
@@ -116,12 +117,27 @@ const App = () => {
                 </ProtectedRoute>
               }
             />
-            {/* Ajouter la nouvelle route pour la page Payement */}
             <Route
               path="/payement"
               element={
                 <ProtectedRoute>
                   <Payement />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <Profile />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/settings"
+              element={
+                <ProtectedRoute>
+                  <Settings />
                 </ProtectedRoute>
               }
             />
