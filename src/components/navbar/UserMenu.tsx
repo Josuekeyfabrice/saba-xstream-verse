@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from '@/components/ui/button';
+import { useAuth } from '@/hooks/useAuth';
+import { supabase } from '@/integrations/supabase/client';
 
 type UserMenuProps = {
   onLogout: () => void;
@@ -19,21 +21,27 @@ type UserMenuProps = {
 
 export const UserMenu = ({ onLogout }: UserMenuProps) => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [userName, setUserName] = useState<string>('');
   const [userInitial, setUserInitial] = useState<string>('');
   
   useEffect(() => {
-    const userData = localStorage.getItem('currentUser');
-    if (userData) {
-      try {
-        const parsedUserData = JSON.parse(userData);
-        setUserName(parsedUserData.name || parsedUserData.email || '');
-        setUserInitial((parsedUserData.name || parsedUserData.email || '').charAt(0).toUpperCase());
-      } catch (error) {
-        console.error('Error parsing user data:', error);
+    const fetchUserProfile = async () => {
+      if (user) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('name, email')
+          .eq('id', user.id)
+          .single();
+        
+        const displayName = profile?.name || user.email || '';
+        setUserName(displayName);
+        setUserInitial(displayName.charAt(0).toUpperCase());
       }
-    }
-  }, []);
+    };
+
+    fetchUserProfile();
+  }, [user]);
 
   return (
     <DropdownMenu>

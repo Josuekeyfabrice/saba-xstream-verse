@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { validateEmail, validatePhoneNumber } from "@/lib/utils";
 
@@ -10,15 +11,16 @@ export const useRegisterForm = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [step, setStep] = useState(1); // Step 1: Basic info, Step 2: OTP verification
+  const [step, setStep] = useState(1);
   const [isVerifying, setIsVerifying] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [otpCode, setOtpCode] = useState("");
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { signUp } = useAuth();
 
   const validateForm = () => {
-    // Validation du formulaire avant d'envoyer le code
     if (!name.trim()) {
       toast({
         variant: "destructive",
@@ -28,7 +30,6 @@ export const useRegisterForm = () => {
       return false;
     }
 
-    // Vérification de la validité de l'email
     if (!validateEmail(email)) {
       toast({
         variant: "destructive",
@@ -38,7 +39,6 @@ export const useRegisterForm = () => {
       return false;
     }
 
-    // Vérification de la correspondance des mots de passe
     if (password !== confirmPassword) {
       toast({
         variant: "destructive",
@@ -48,7 +48,6 @@ export const useRegisterForm = () => {
       return false;
     }
 
-    // Validation du numéro de téléphone
     if (!validatePhoneNumber(phoneNumber)) {
       toast({
         variant: "destructive",
@@ -61,25 +60,25 @@ export const useRegisterForm = () => {
     return true;
   };
 
-  const handleSendOTP = () => {
+  const handleSendOTP = async () => {
     if (!validateForm()) return;
 
-    // Simulation de l'envoi du code OTP
     setIsVerifying(true);
 
-    // Délai simulé pour l'envoi du code
-    setTimeout(() => {
-      setIsVerifying(false);
-      setStep(2); // Passer à l'étape de vérification OTP
-      
+    const { error } = await signUp(email, password, {
+      name,
+      phone_number: phoneNumber,
+    });
+
+    setIsVerifying(false);
+
+    if (!error) {
+      setStep(2);
       toast({
-        title: "Code envoyé",
-        description: "Un code de vérification a été envoyé à votre numéro de téléphone",
+        title: "Inscription en cours",
+        description: "Un email de confirmation a été envoyé à votre adresse",
       });
-      
-      // Dans un cas réel, le code serait envoyé au téléphone de l'utilisateur
-      console.log(`Code OTP envoyé au numéro: ${phoneNumber}`);
-    }, 1500);
+    }
   };
 
   const togglePasswordVisibility = () => {
@@ -91,31 +90,6 @@ export const useRegisterForm = () => {
   };
 
   const handleVerifySuccess = () => {
-    // Enregistrer l'utilisateur dans le localStorage
-    const users = JSON.parse(localStorage.getItem("users") || "[]");
-    
-    // Vérifier l'utilisateur existant dans le localStorage
-    const userExists = users.some((user: { email: string }) => user.email === email);
-    
-    if (userExists) {
-      toast({
-        variant: "destructive",
-        title: "Erreur d'inscription",
-        description: "Un compte avec cette adresse email existe déjà",
-      });
-      return;
-    }
-
-    const newUser = { 
-      name, 
-      email, 
-      password, 
-      phoneNumber,
-      verified: true,  // L'utilisateur est vérifié car il a passé l'étape OTP
-    };
-    users.push(newUser);
-    localStorage.setItem("users", JSON.stringify(users));
-
     toast({
       title: "Inscription réussie",
       description: "Votre compte a été créé avec succès. Vous pouvez maintenant vous connecter.",
@@ -140,6 +114,8 @@ export const useRegisterForm = () => {
     isVerifying,
     showPassword,
     showConfirmPassword,
+    otpCode,
+    setOtpCode,
     handleSendOTP,
     togglePasswordVisibility,
     toggleConfirmPasswordVisibility,

@@ -1,90 +1,45 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useToast } from "@/hooks/use-toast";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const { toast } = useToast();
+  const { signIn, resetPassword, user } = useAuth();
 
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // Récupérer les utilisateurs du localStorage
-    const users = JSON.parse(localStorage.getItem("users") || "[]");
-    
-    // Vérifier si l'utilisateur existe et si le mot de passe correspond
-    const user = users.find((user: { email: string, password: string, verified: boolean }) => 
-      user.email === email && user.password === password
-    );
-    
+  // Redirect if already logged in
+  useEffect(() => {
     if (user) {
-      // Vérifier si l'utilisateur a confirmé son email
-      if (!user.verified) {
-        toast({
-          variant: "destructive",
-          title: "Compte non vérifié",
-          description: "Veuillez vérifier votre email pour activer votre compte",
-        });
-        return;
-      }
-      
-      // Authentification réussie - set localStorage values
-      localStorage.setItem('isLoggedIn', 'true');
-      localStorage.setItem('currentUser', JSON.stringify({ email: user.email, name: user.name }));
-      
-      toast({
-        title: "Connexion réussie",
-        description: "Bienvenue sur notre plateforme !",
-      });
       navigate('/');
-    } else {
-      // Authentification échouée
-      toast({
-        variant: "destructive",
-        title: "Erreur de connexion",
-        description: "Email ou mot de passe incorrect",
-      });
     }
+  }, [user, navigate]);
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    
+    const { error } = await signIn(email, password);
+    
+    if (!error) {
+      navigate('/');
+    }
+    
+    setIsLoading(false);
   };
 
-  const handleForgotPassword = () => {
+  const handleForgotPassword = async () => {
     if (!email) {
-      toast({
-        variant: "destructive",
-        title: "Email requis",
-        description: "Veuillez entrer votre email pour réinitialiser votre mot de passe",
-      });
       return;
     }
     
-    // Vérifier si l'email existe dans la base de données
-    const users = JSON.parse(localStorage.getItem("users") || "[]");
-    const userExists = users.some((user: { email: string }) => user.email === email);
-    
-    if (!userExists) {
-      toast({
-        variant: "destructive",
-        title: "Email inconnu",
-        description: "Aucun compte associé à cet email",
-      });
-      return;
-    }
-    
-    // Simuler l'envoi d'un email de réinitialisation
-    toast({
-      title: "Email envoyé",
-      description: "Instructions de réinitialisation envoyées à votre adresse email",
-    });
-    
-    // Dans un cas réel, vous enverriez un email avec un lien de réinitialisation
-    console.log(`Réinitialisation de mot de passe demandée pour: ${email}`);
+    await resetPassword(email);
   };
 
   const togglePasswordVisibility = () => {
@@ -143,7 +98,8 @@ const Login = () => {
             <button
               type="button"
               onClick={handleForgotPassword}
-              className="text-sm text-blue-300 hover:text-blue-200 hover:underline transition-all"
+              disabled={!email}
+              className="text-sm text-blue-300 hover:text-blue-200 hover:underline transition-all disabled:opacity-50"
             >
               Mot de passe oublié?
             </button>
@@ -151,9 +107,10 @@ const Login = () => {
           
           <Button 
             type="submit" 
+            disabled={isLoading}
             className="w-full h-10 text-base transform transition-all duration-300 hover:scale-105 hover:bg-stream-purple/90 active:scale-95 animate-fade-in"
           >
-            Se connecter
+            {isLoading ? "Connexion..." : "Se connecter"}
           </Button>
           
           <div className="text-center mt-3">
