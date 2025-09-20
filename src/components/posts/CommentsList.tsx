@@ -30,13 +30,13 @@ export const CommentsList: React.FC<CommentsListProps> = ({ comments }) => {
       {comments.map((comment) => (
         <div key={comment.id} className="flex gap-3">
           <Avatar className="h-8 w-8">
-            <AvatarImage src={`https://avatar.vercel.sh/${comment.user_id}`} alt={comment.profiles?.name || 'User'} />
-            <AvatarFallback>{comment.profiles?.name?.[0] || 'U'}</AvatarFallback>
+            <AvatarImage src={`https://avatar.vercel.sh/${comment.user_id}`} alt="User" />
+            <AvatarFallback>U</AvatarFallback>
           </Avatar>
           
           <div className="flex-1 space-y-1">
             <div className="bg-muted rounded-lg px-3 py-2">
-              <p className="font-medium text-sm">{comment.profiles?.name || 'Utilisateur'}</p>
+              <p className="font-medium text-sm">Utilisateur</p>
               <p className="text-sm">{comment.content}</p>
             </div>
             <p className="text-xs text-muted-foreground ml-3">

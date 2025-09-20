@@ -15,7 +15,7 @@ export const CreatePostCard: React.FC<CreatePostCardProps> = ({ onCreatePost, lo
   const [content, setContent] = useState('');
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const { user, profile } = useAuth();
+  const { user } = useAuth();
 
   const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -49,11 +49,11 @@ export const CreatePostCard: React.FC<CreatePostCardProps> = ({ onCreatePost, lo
       <CardHeader className="pb-4">
         <div className="flex items-center gap-3">
           <Avatar className="h-10 w-10">
-            <AvatarImage src={`https://avatar.vercel.sh/${user.email}`} alt={profile?.name || user.email || ''} />
-            <AvatarFallback>{profile?.name?.[0] || user.email?.[0] || 'U'}</AvatarFallback>
+            <AvatarImage src={`https://avatar.vercel.sh/${user.email}`} alt={user.email || ''} />
+            <AvatarFallback>{user.email?.[0] || 'U'}</AvatarFallback>
           </Avatar>
           <div>
-            <p className="font-medium">{profile?.name || user.email}</p>
+            <p className="font-medium">{user.email}</p>
             <p className="text-sm text-muted-foreground">Que se passe-t-il ?</p>
           </div>
         </div>

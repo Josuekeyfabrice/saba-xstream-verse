@@ -10,9 +10,6 @@ export interface Post {
   comments_count: number;
   created_at: string;
   user_id: string;
-  profiles: {
-    name: string | null;
-  } | null;
 }
 
 export interface Comment {
@@ -20,9 +17,6 @@ export interface Comment {
   content: string;
   created_at: string;
   user_id: string;
-  profiles: {
-    name: string | null;
-  } | null;
 }
 
 export const usePosts = () => {
@@ -34,10 +28,7 @@ export const usePosts = () => {
     try {
       const { data, error } = await supabase
         .from('posts')
-        .select(`
-          *,
-          profiles (name)
-        `)
+      .select('*')
         .order('created_at', { ascending: false });
 
       if (error) throw error;
@@ -143,10 +134,7 @@ export const usePosts = () => {
     try {
       const { data, error } = await supabase
         .from('comments')
-        .select(`
-          *,
-          profiles (name)
-        `)
+        .select('*')
         .eq('post_id', postId)
         .order('created_at', { ascending: true });
 

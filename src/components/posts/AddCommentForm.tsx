@@ -11,7 +11,7 @@ interface AddCommentFormProps {
 
 export const AddCommentForm: React.FC<AddCommentFormProps> = ({ onAddComment }) => {
   const [content, setContent] = useState('');
-  const { user, profile } = useAuth();
+  const { user } = useAuth();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,8 +26,8 @@ export const AddCommentForm: React.FC<AddCommentFormProps> = ({ onAddComment }) 
   return (
     <form onSubmit={handleSubmit} className="flex gap-3">
       <Avatar className="h-8 w-8">
-        <AvatarImage src={`https://avatar.vercel.sh/${user.email}`} alt={profile?.name || user.email || ''} />
-        <AvatarFallback>{profile?.name?.[0] || user.email?.[0] || 'U'}</AvatarFallback>
+        <AvatarImage src={`https://avatar.vercel.sh/${user.email}`} alt={user.email || ''} />
+        <AvatarFallback>{user.email?.[0] || 'U'}</AvatarFallback>
       </Avatar>
       
       <div className="flex-1 space-y-2">

@@ -56,11 +56,11 @@ export const PostCard: React.FC<PostCardProps> = ({
       <CardHeader className="pb-4">
         <div className="flex items-center gap-3">
           <Avatar className="h-10 w-10">
-            <AvatarImage src={`https://avatar.vercel.sh/${post.user_id}`} alt={post.profiles?.name || 'User'} />
-            <AvatarFallback>{post.profiles?.name?.[0] || 'U'}</AvatarFallback>
+            <AvatarImage src={`https://avatar.vercel.sh/${post.user_id}`} alt="User" />
+            <AvatarFallback>U</AvatarFallback>
           </Avatar>
           <div className="flex-1">
-            <p className="font-medium">{post.profiles?.name || 'Utilisateur'}</p>
+            <p className="font-medium">Utilisateur</p>
             <p className="text-sm text-muted-foreground">{formatDate(post.created_at)}</p>
           </div>
         </div>
