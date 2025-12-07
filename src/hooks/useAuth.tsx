@@ -66,10 +66,19 @@ export const useAuth = () => {
     });
 
     if (error) {
+      let errorMessage = error.message;
+      
+      // Améliorer les messages d'erreur en français
+      if (error.message.includes('Invalid login credentials')) {
+        errorMessage = "Email ou mot de passe incorrect. Si vous venez de vous inscrire, veuillez d'abord confirmer votre email.";
+      } else if (error.message.includes('Email not confirmed')) {
+        errorMessage = "Veuillez confirmer votre email avant de vous connecter. Vérifiez votre boîte de réception.";
+      }
+      
       toast({
         variant: "destructive",
         title: "Erreur de connexion",
-        description: error.message,
+        description: errorMessage,
       });
       return { error };
     }
@@ -80,6 +89,32 @@ export const useAuth = () => {
     });
 
     return { data, error: null };
+  };
+
+  const resendConfirmationEmail = async (email: string) => {
+    const { error } = await supabase.auth.resend({
+      type: 'signup',
+      email,
+      options: {
+        emailRedirectTo: `${window.location.origin}/`,
+      }
+    });
+
+    if (error) {
+      toast({
+        variant: "destructive",
+        title: "Erreur",
+        description: "Impossible de renvoyer l'email de confirmation.",
+      });
+      return { error };
+    }
+
+    toast({
+      title: "Email envoyé",
+      description: "Un nouvel email de confirmation a été envoyé. Vérifiez votre boîte de réception.",
+    });
+
+    return { error: null };
   };
 
   const signOut = async () => {
@@ -132,5 +167,6 @@ export const useAuth = () => {
     signIn,
     signOut,
     resetPassword,
+    resendConfirmationEmail,
   };
 };
