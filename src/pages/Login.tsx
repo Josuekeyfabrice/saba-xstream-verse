@@ -11,8 +11,9 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showResendOption, setShowResendOption] = useState(false);
   const navigate = useNavigate();
-  const { signIn, resetPassword, user } = useAuth();
+  const { signIn, resetPassword, resendConfirmationEmail, user } = useAuth();
 
   // Redirect if already logged in
   useEffect(() => {
@@ -29,9 +30,19 @@ const Login = () => {
     
     if (!error) {
       navigate('/');
+    } else {
+      // Afficher l'option de renvoi d'email si l'erreur est liée aux credentials
+      setShowResendOption(true);
     }
     
     setIsLoading(false);
+  };
+
+  const handleResendConfirmation = async () => {
+    if (!email) {
+      return;
+    }
+    await resendConfirmationEmail(email);
   };
 
   const handleForgotPassword = async () => {
@@ -94,12 +105,22 @@ const Login = () => {
             </div>
           </div>
           
-          <div className="flex justify-end">
+          <div className="flex justify-between items-center">
+            {showResendOption && (
+              <button
+                type="button"
+                onClick={handleResendConfirmation}
+                disabled={!email}
+                className="text-sm text-primary hover:text-primary/80 hover:underline transition-all disabled:opacity-50"
+              >
+                Renvoyer l'email de confirmation
+              </button>
+            )}
             <button
               type="button"
               onClick={handleForgotPassword}
               disabled={!email}
-              className="text-sm text-primary hover:text-primary/80 hover:underline transition-all disabled:opacity-50"
+              className="text-sm text-primary hover:text-primary/80 hover:underline transition-all disabled:opacity-50 ml-auto"
             >
               Mot de passe oublié?
             </button>
